@@ -1,0 +1,37 @@
+import { assetsUrl } from "../libs/constants";
+
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
+export type TierDefinition = {
+	readonly id: string;
+	readonly label: string;
+	readonly color: string;
+};
+
+export type TierTableDefinition = {
+	readonly title: string;
+	readonly images: string[];
+	readonly tiers: TierDefinition[];
+};
+
+export const getTierTableDefinition = async (
+	id: string,
+): Promise<TierTableDefinition> => {
+	await delay(1);
+	const url = `${assetsUrl}/${id}/def.json`;
+	const res = await fetch(url);
+	if (res.status !== 200) {
+		throw new Error(`failed to fetch "${url}"`);
+	}
+	const definition = (await res.json()) as TierTableDefinition;
+	const mapped: TierTableDefinition = {
+		...definition,
+		images: definition.images.map((name) => getTierAssetUrl(id, name)),
+	};
+	return mapped;
+};
+
+export const getTierAssetUrl = (id: string, name: string) => {
+	const url = `${assetsUrl}/${id}/${name}`;
+	return url;
+};
