@@ -4,6 +4,21 @@ const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export type TierKey = string;
 
+export type Tiers = {
+	defs: { key: TierKey; title: string }[];
+};
+
+export const getTiers = async (): Promise<Tiers> => {
+	await delay(1);
+	const url = `${assetsUrl}/defs.json`;
+	const res = await fetch(url);
+	if (res.status !== 200) {
+		throw new Error(`failed to fetch "${url}"`);
+	}
+	const tiers = (await res.json()) as Tiers;
+	return tiers;
+};
+
 export type TierDefinition = {
 	readonly key: TierKey;
 	readonly label: string;

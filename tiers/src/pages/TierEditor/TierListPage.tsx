@@ -5,31 +5,26 @@ import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
 import { MuiBox } from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
-import { TierEditor } from "./TierEditor";
+import { TierList } from "./TierList";
 
-const Title: FC = () => <Appbar text="tiers" />;
+const Title: FC = () => <Appbar text="tiers > list" />;
 
-const Main: FC<{ defKey: string }> = ({ defKey }) => (
+const Main: FC = () => (
 	<ErrorBoundary
 		fallback={(error, errorInfo) => (
 			<ErrorFallback error={error} errorInfo={errorInfo} />
 		)}
 	>
 		<Suspense fallback={"loading"}>
-			<MuiBox
-				width="100%"
-				height="100%"
-				p={1}
-				sx={{ overflowY: "scroll", overflowX: "hidden" }}
-			>
-				<TierEditor defKey={defKey} />
+			<MuiBox width="100%" height="100%" p={1} overflow="hidden">
+				<TierList />
 			</MuiBox>
 		</Suspense>
 	</ErrorBoundary>
 );
 
-export const TierEditorPage: FC<{ defKey: string }> = ({ defKey }) => (
+export const TierListPage: FC = () => (
 	<Page>
-		<MainLayout title={<Title />} main={<Main defKey={defKey} />} />
+		<MainLayout title={<Title />} main={<Main />} />
 	</Page>
 );

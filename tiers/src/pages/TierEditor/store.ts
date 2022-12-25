@@ -1,6 +1,7 @@
 import {
 	AtomEffect,
 	atomFamily,
+	selector,
 	selectorFamily,
 	useRecoilValue,
 	useSetRecoilState,
@@ -9,9 +10,19 @@ import {
 	getTierTableDefinition,
 	TierDefinition,
 	TierTableDefinition,
+	TierKey,
+	Tiers,
+	getTiers,
 } from "../../apis/tiers";
 
-type TierKey = string;
+const tiersQuery = selector<Tiers>({
+	key: "tiers",
+	get: async () => {
+		return await getTiers();
+	},
+});
+
+export const useTiers = () => useRecoilValue(tiersQuery);
 
 export const uncategorizedTier: TierDefinition = {
 	key: "uncategorized",
@@ -54,10 +65,7 @@ const tierMappingEffect: (key: TierKey) => AtomEffect<TierMapping> =
 		});
 	};
 
-export const currentTierQuery = selectorFamily<
-	TierTableDefinition | null,
-	TierKey
->({
+const currentTierQuery = selectorFamily<TierTableDefinition | null, TierKey>({
 	key: "currentTier",
 	get: (key) => async () => {
 		if (key == null) {
