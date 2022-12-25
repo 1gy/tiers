@@ -1,13 +1,39 @@
 import { FC, Suspense } from "react";
 import { ErrorBoundary } from "../../components/functional/ErrorBoundary";
 import { Appbar } from "../../components/presentational/Appbar";
+import { BreadcrumbsSeparator } from "../../components/presentational/BreadcrumbsSeparator";
 import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
-import { MuiBox } from "../../components/presentational/Mui";
+import {
+	MuiBox,
+	MuiLink,
+	MuiTypography,
+} from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
 import { TierEditor } from "./TierEditor";
+import { useTierDefinition } from "./store";
+import { useNavigate } from "rocon/react";
+import { routes } from "../Routes";
 
-const Title: FC = () => <Appbar text="tiers" />;
+const Title: FC<{ defKey: string }> = ({ defKey }) => {
+	const { definition } = useTierDefinition(defKey);
+	const navigate = useNavigate();
+
+	return (
+		<Appbar>
+			<MuiLink
+				href="#"
+				underline="hover"
+				color="inherit"
+				onClick={() => navigate(routes._.edit)}
+			>
+				Tiers
+			</MuiLink>
+			<BreadcrumbsSeparator />
+			<MuiTypography>{definition?.title}</MuiTypography>
+		</Appbar>
+	);
+};
 
 const Main: FC<{ defKey: string }> = ({ defKey }) => (
 	<ErrorBoundary
@@ -30,6 +56,9 @@ const Main: FC<{ defKey: string }> = ({ defKey }) => (
 
 export const TierEditorPage: FC<{ defKey: string }> = ({ defKey }) => (
 	<Page>
-		<MainLayout title={<Title />} main={<Main defKey={defKey} />} />
+		<MainLayout
+			title={<Title defKey={defKey} />}
+			main={<Main defKey={defKey} />}
+		/>
 	</Page>
 );

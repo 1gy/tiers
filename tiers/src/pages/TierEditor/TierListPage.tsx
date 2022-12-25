@@ -3,11 +3,15 @@ import { ErrorBoundary } from "../../components/functional/ErrorBoundary";
 import { Appbar } from "../../components/presentational/Appbar";
 import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
-import { MuiBox } from "../../components/presentational/Mui";
+import { MuiBox, MuiTypography } from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
 import { TierList } from "./TierList";
 
-const Title: FC = () => <Appbar text="tiers > list" />;
+const Title: FC = () => (
+	<Appbar>
+		<MuiTypography>Tiers</MuiTypography>
+	</Appbar>
+);
 
 const Main: FC = () => (
 	<ErrorBoundary

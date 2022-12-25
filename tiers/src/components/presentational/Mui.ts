@@ -9,3 +9,5 @@ export { default as MuiList } from "@mui/material/List";
 export { default as MuiListItem } from "@mui/material/ListItem";
 export { default as MuiListItemButton } from "@mui/material/ListItemButton";
 export { default as MuiListItemText } from "@mui/material/ListItemText";
+export { default as MuiBreadcrumbs } from "@mui/material/Breadcrumbs";
+export { default as MuiLink } from "@mui/material/Link";

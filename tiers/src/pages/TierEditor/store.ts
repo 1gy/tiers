@@ -102,6 +102,7 @@ export type TierTable = {
 	images: string[];
 }[];
 
+// FIXME
 export const useTierDefinition = (key: string) => {
 	const definition = useRecoilValue(currentTierQuery(key));
 	return {
