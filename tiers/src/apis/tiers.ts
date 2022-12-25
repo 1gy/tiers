@@ -5,7 +5,7 @@ const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 export type TierKey = string;
 
 export type TierDefinition = {
-	readonly id: TierKey;
+	readonly key: TierKey;
 	readonly label: string;
 	readonly color: string;
 };
@@ -17,10 +17,10 @@ export type TierTableDefinition = {
 };
 
 export const getTierTableDefinition = async (
-	id: string,
+	defKey: string,
 ): Promise<TierTableDefinition> => {
 	await delay(1);
-	const url = `${assetsUrl}/${id}/def.json`;
+	const url = `${assetsUrl}/${defKey}/def.json`;
 	const res = await fetch(url);
 	if (res.status !== 200) {
 		throw new Error(`failed to fetch "${url}"`);
@@ -28,12 +28,12 @@ export const getTierTableDefinition = async (
 	const definition = (await res.json()) as TierTableDefinition;
 	const mapped: TierTableDefinition = {
 		...definition,
-		images: definition.images.map((name) => getTierAssetUrl(id, name)),
+		images: definition.images.map((name) => getTierAssetUrl(defKey, name)),
 	};
 	return mapped;
 };
 
-export const getTierAssetUrl = (id: string, name: string) => {
-	const url = `${assetsUrl}/${id}/${name}`;
+export const getTierAssetUrl = (defKey: string, name: string) => {
+	const url = `${assetsUrl}/${defKey}/${name}`;
 	return url;
 };

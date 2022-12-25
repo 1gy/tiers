@@ -33,7 +33,7 @@ const Main: FC = () => (
 				p={1}
 				sx={{ overflowY: "scroll", overflowX: "hidden" }}
 			>
-				<TierEditor id="2022_3" />
+				<TierEditor defKey="2022_3" />
 			</MuiBox>
 		</Suspense>
 	</ErrorBoundary>

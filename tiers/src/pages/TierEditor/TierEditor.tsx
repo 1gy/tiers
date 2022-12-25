@@ -29,9 +29,9 @@ const findRow = (
 	if (!id) {
 		return null;
 	}
-	const row = definition?.tiers.find((v) => v.label === id);
+	const row = definition?.tiers.find((v) => v.key === id);
 	if (row) {
-		return row.id;
+		return row.key;
 	}
 	for (const [key, value] of Object.entries(mapping.mappings)) {
 		if (value.images.find((s) => s === id)) {
@@ -55,34 +55,34 @@ const swapArray = <T extends unknown>(
 	);
 
 export type TierEditorProps = {
-	id: string;
+	defKey: string;
 };
 
 export const TierEditor: FC<TierEditorProps> = memo((props) => {
-	const { definition } = useTierDefinition(props.id);
-	const tierMapping = useTierMapping(props.id);
-	const setTierMapping = useSetTierMapping(props.id);
+	const { definition } = useTierDefinition(props.defKey);
+	const tierMapping = useTierMapping(props.defKey);
+	const setTierMapping = useSetTierMapping(props.defKey);
 
 	const handleDragOver = (event: DragOverEvent) => {
 		const { active, over } = event;
 		const activeId = String(active.id);
 		const overId = over ? String(over.id) : null;
-		const activeColumn = findRow(definition, tierMapping, activeId); // TODO activeColumnKey
-		const overColumn = findRow(definition, tierMapping, overId);
+		const activeColumnKey = findRow(definition, tierMapping, activeId);
+		const overColumnKey = findRow(definition, tierMapping, overId);
 		if (
-			activeColumn == null ||
-			overColumn == null ||
-			activeColumn === overColumn
+			activeColumnKey == null ||
+			overColumnKey == null ||
+			activeColumnKey === overColumnKey
 		) {
 			return null;
 		}
 		setTierMapping(
 			produce((draft) => {
 				Object.entries(draft.mappings).forEach(([key, value]) => {
-					if (key === activeColumn) {
+					if (key === activeColumnKey) {
 						value.images = value.images.filter((img) => img !== activeId);
 					}
-					if (key === overColumn) {
+					if (key === overColumnKey) {
 						value.images.push(activeId);
 					}
 				});
@@ -95,19 +95,19 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 		const { active, over } = event;
 		const activeId = String(active.id);
 		const overId = over ? String(over.id) : null;
-		const activeColumn = findRow(definition, tierMapping, activeId);
-		const overColumn = findRow(definition, tierMapping, overId);
+		const activeColumnKey = findRow(definition, tierMapping, activeId);
+		const overColumnKey = findRow(definition, tierMapping, overId);
 		if (
-			activeColumn == null ||
-			overColumn == null ||
-			activeColumn !== overColumn
+			activeColumnKey == null ||
+			overColumnKey == null ||
+			activeColumnKey !== overColumnKey
 		) {
 			return null;
 		}
 		setTierMapping(
 			produce((draft) => {
 				Object.entries(draft.mappings).forEach(([key, value]) => {
-					if (key === activeColumn) {
+					if (key === activeColumnKey) {
 						const activeIndex = value.images.findIndex((i) => i === activeId);
 						const overIndex = value.images.findIndex((i) => i === overId);
 						if (
@@ -141,15 +141,15 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 			>
 				{definition?.tiers.map((tier) => (
 					<TierRow
-						key={tier.id}
+						key={tier.key}
 						tier={tier}
-						images={tierMapping.mappings[tier.id]?.images || []}
+						images={tierMapping.mappings[tier.key]?.images || []}
 					/>
 				))}
 				<TierRow
-					key={uncategorizedTier.id}
+					key={uncategorizedTier.key}
 					tier={uncategorizedTier}
-					images={tierMapping.mappings[uncategorizedTier.id]?.images || []}
+					images={tierMapping.mappings[uncategorizedTier.key]?.images || []}
 				/>
 			</MuiGrid>
 		</DndContext>

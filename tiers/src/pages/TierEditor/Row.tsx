@@ -14,13 +14,17 @@ export type TierRowProps = {
 export const TierRow: FC<TierRowProps> = memo(({ tier, images }) => {
 	const { setNodeRef } = useDroppable({ id: tier.label });
 	return (
-		<SortableContext id={tier.id} items={images} strategy={rectSortingStrategy}>
+		<SortableContext
+			id={tier.key}
+			items={images}
+			strategy={rectSortingStrategy}
+		>
 			<MuiGrid item container direction="row" flexWrap="nowrap">
-				<TierLabel key={tier.id} color={tier.color} label={tier.label} />
+				<TierLabel key={tier.key} color={tier.color} label={tier.label} />
 				<MuiBox pl={1} sx={{ bgcolor: tier.color, opacity: 0.5 }} />
 				<MuiGrid width="100%" ref={setNodeRef} sx={{ bgcolor: "#fff" }}>
 					{images.map((image) => (
-						<TierCard key={image} url={image} />
+						<TierCard key={image} image={image} />
 					))}
 				</MuiGrid>
 			</MuiGrid>

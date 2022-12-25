@@ -5,12 +5,12 @@ import { iconSize } from "./constants";
 import { MuiBox } from "../../components/presentational/Mui";
 
 export type TierCardProps = {
-	url: string;
+	image: string;
 };
 
-export const TierCard: FC<TierCardProps> = memo(({ url }) => {
+export const TierCard: FC<TierCardProps> = memo(({ image }) => {
 	const { attributes, listeners, setNodeRef, transform } = useSortable({
-		id: url,
+		id: image,
 	});
 	const style = {
 		transform: CSS.Transform.toString(transform),
@@ -26,7 +26,7 @@ export const TierCard: FC<TierCardProps> = memo(({ url }) => {
 			sx={{ touchAction: "none" }}
 		>
 			<img
-				src={url}
+				src={image}
 				alt=""
 				width={iconSize}
 				height={iconSize}

@@ -14,7 +14,7 @@ import {
 type TierKey = string;
 
 export const uncategorizedTier: TierDefinition = {
-	id: "uncategorized",
+	key: "uncategorized",
 	color: "gray",
 	label: "",
 };
@@ -27,29 +27,29 @@ const createDefaultMapping = (
 		return mapping;
 	}
 	definition.tiers.map((tier) => {
-		mapping.mappings[tier.id] = { images: [] };
+		mapping.mappings[tier.key] = { images: [] };
 	});
-	mapping.mappings[uncategorizedTier.id] = { images: definition.images };
+	mapping.mappings[uncategorizedTier.key] = { images: definition.images };
 	return mapping;
 };
 
-const tierMappingEffect: (id: TierKey) => AtomEffect<TierMapping> =
-	(id) => ({ setSelf, onSet, getPromise }) => {
-		const savedValue = localStorage.getItem(id);
+const tierMappingEffect: (key: TierKey) => AtomEffect<TierMapping> =
+	(key) => ({ setSelf, onSet, getPromise }) => {
+		const savedValue = localStorage.getItem(key);
 		if (savedValue != null) {
 			setSelf(JSON.parse(savedValue));
 		} else {
 			setSelf(
-				getPromise(currentTierQuery(id)).then((def) =>
+				getPromise(currentTierQuery(key)).then((def) =>
 					createDefaultMapping(def),
 				),
 			);
 		}
 		onSet((newValue, _, isReset) => {
 			if (isReset) {
-				localStorage.removeItem(id);
+				localStorage.removeItem(key);
 			} else {
-				localStorage.setItem(id, JSON.stringify(newValue));
+				localStorage.setItem(key, JSON.stringify(newValue));
 			}
 		});
 	};
@@ -59,12 +59,12 @@ export const currentTierQuery = selectorFamily<
 	TierKey
 >({
 	key: "currentTier",
-	get: (id) => async () => {
-		if (id == null) {
+	get: (key) => async () => {
+		if (key == null) {
 			return null;
 		}
 		try {
-			return await getTierTableDefinition(id);
+			return await getTierTableDefinition(key);
 		} catch (_) {
 			return null;
 		}
@@ -78,15 +78,15 @@ export type TierMapping = {
 const tierMappingStore = atomFamily<TierMapping, TierKey>({
 	key: "tierMappingState",
 	default: { mappings: {} },
-	effects: (id) => [tierMappingEffect(id)],
+	effects: (key) => [tierMappingEffect(key)],
 });
 
-export const useTierMapping = (id: TierKey) => {
-	return useRecoilValue(tierMappingStore(id));
+export const useTierMapping = (key: TierKey) => {
+	return useRecoilValue(tierMappingStore(key));
 };
 
-export const useSetTierMapping = (id: TierKey) => {
-	return useSetRecoilState(tierMappingStore(id));
+export const useSetTierMapping = (key: TierKey) => {
+	return useSetRecoilState(tierMappingStore(key));
 };
 
 export type TierTable = {
@@ -94,8 +94,8 @@ export type TierTable = {
 	images: string[];
 }[];
 
-export const useTierDefinition = (id: string) => {
-	const definition = useRecoilValue(currentTierQuery(id));
+export const useTierDefinition = (key: string) => {
+	const definition = useRecoilValue(currentTierQuery(key));
 	return {
 		definition,
 	};
