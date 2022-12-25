@@ -58,8 +58,8 @@ export type TierEditorProps = {
 
 export const TierEditor: FC<TierEditorProps> = memo((props) => {
 	const { definition } = useTierDefinition(props.id);
-	const tierMapping = useTierMapping();
-	const setTierMapping = useSetTierMapping();
+	const tierMapping = useTierMapping(props.id);
+	const setTierMapping = useSetTierMapping(props.id);
 
 	const handleDragOver = (event: DragOverEvent) => {
 		const { active, over } = event;
