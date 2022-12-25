@@ -14,6 +14,7 @@ import {
 	Tiers,
 	getTiers,
 } from "../../apis/tiers";
+import type { DeepNullable } from "../../libs/types";
 
 const tiersQuery = selector<Tiers>({
 	key: "tiers",
@@ -30,29 +31,49 @@ export const uncategorizedTier: TierDefinition = {
 	label: "",
 };
 
-const createDefaultMapping = (
-	definition: TierTableDefinition | null,
-): TierMapping => {
-	const mapping: TierMapping = { mappings: {} };
-	if (!definition) {
-		return mapping;
+const normalizeMapping = (
+	definition: TierTableDefinition,
+	mapping: DeepNullable<TierMapping> | undefined,
+) => {
+	const imageSet = new Set<string>(definition.images);
+	const res: TierMapping = { mappings: {} };
+	for (const tier of definition.tiers) {
+		if (mapping?.mappings?.[tier.key]?.images) {
+			const images: string[] = [];
+			mapping.mappings[tier.key]!.images?.forEach((img) => {
+				if (!img) {
+					return;
+				}
+				imageSet.delete(img);
+				images.push(img);
+			});
+			res.mappings[tier.key] = { images };
+		} else {
+			res.mappings[tier.key] = {
+				images: [],
+			};
+		}
 	}
-	definition.tiers.map((tier) => {
-		mapping.mappings[tier.key] = { images: [] };
-	});
-	mapping.mappings[uncategorizedTier.key] = { images: definition.images };
-	return mapping;
+	// uncategorized
+	res.mappings[uncategorizedTier.key] = {
+		images: [...imageSet.values()],
+	};
+	return res;
 };
 
 const tierMappingEffect: (key: TierKey) => AtomEffect<TierMapping> =
 	(key) => ({ setSelf, onSet, getPromise }) => {
 		const savedValue = localStorage.getItem(key);
 		if (savedValue != null) {
-			setSelf(JSON.parse(savedValue));
+			setSelf(
+				getPromise(tierQuery(key)).then((def) =>
+					normalizeMapping(def, JSON.parse(savedValue)),
+				),
+			);
 		} else {
 			setSelf(
-				getPromise(currentTierQuery(key)).then((def) =>
-					createDefaultMapping(def),
+				getPromise(tierQuery(key)).then((def) =>
+					normalizeMapping(def, undefined),
 				),
 			);
 		}
@@ -65,17 +86,10 @@ const tierMappingEffect: (key: TierKey) => AtomEffect<TierMapping> =
 		});
 	};
 
-const currentTierQuery = selectorFamily<TierTableDefinition | null, TierKey>({
+const tierQuery = selectorFamily<TierTableDefinition, TierKey>({
 	key: "currentTier",
 	get: (key) => async () => {
-		if (key == null) {
-			return null;
-		}
-		try {
-			return await getTierTableDefinition(key);
-		} catch (_) {
-			return null;
-		}
+		return await getTierTableDefinition(key);
 	},
 });
 
@@ -102,7 +116,6 @@ export type TierTable = {
 	images: string[];
 }[];
 
-// FIXME
 export const useTierDefinition = (key: string) => {
-	return useRecoilValue(currentTierQuery(key));
+	return useRecoilValue(tierQuery(key));
 };
