@@ -9,7 +9,8 @@ export const IndexPage: FC = () => {
 	return <Redirect route={routes._.edit} />;
 };
 
-export const routes = Rocon.Path()
+export const routes = Rocon.Root({ root: { pathname: "/tiers", state: null } })
+	.attach(Rocon.Path())
 	.exact({ action: () => <IndexPage /> })
 	.route("edit", (route) => route.action(() => <TierListPage />));
 

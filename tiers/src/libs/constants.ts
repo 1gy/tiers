@@ -1,1 +1,1 @@
-export const assetsUrl = "/assets";
+export const assetsUrl = "/tiers/assets";
