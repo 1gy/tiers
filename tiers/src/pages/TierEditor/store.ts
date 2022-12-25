@@ -104,8 +104,5 @@ export type TierTable = {
 
 // FIXME
 export const useTierDefinition = (key: string) => {
-	const definition = useRecoilValue(currentTierQuery(key));
-	return {
-		definition,
-	};
+	return useRecoilValue(currentTierQuery(key));
 };

@@ -63,7 +63,7 @@ export type TierEditorProps = {
 };
 
 export const TierEditor: FC<TierEditorProps> = memo((props) => {
-	const { definition } = useTierDefinition(props.defKey);
+	const definition = useTierDefinition(props.defKey);
 	const tierMapping = useTierMapping(props.defKey);
 	const setTierMapping = useSetTierMapping(props.defKey);
 

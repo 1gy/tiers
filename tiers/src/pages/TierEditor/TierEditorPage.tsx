@@ -11,12 +11,10 @@ import {
 } from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
 import { TierEditor } from "./TierEditor";
-import { useTierDefinition } from "./store";
 import { useNavigate } from "rocon/react";
 import { routes } from "../Routes";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
-	const { definition } = useTierDefinition(defKey);
 	const navigate = useNavigate();
 
 	return (
@@ -30,7 +28,7 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 				Tiers
 			</MuiLink>
 			<BreadcrumbsSeparator />
-			<MuiTypography>{definition?.title}</MuiTypography>
+			<MuiTypography>{defKey}</MuiTypography>
 		</Appbar>
 	);
 };
