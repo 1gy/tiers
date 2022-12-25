@@ -44,8 +44,10 @@ const normalizeMapping = (
 				if (!img) {
 					return;
 				}
-				imageSet.delete(img);
-				images.push(img);
+				if (imageSet.has(img)) {
+					imageSet.delete(img);
+					images.push(img);
+				}
 			});
 			res.mappings[tier.key] = { images };
 		} else {
