@@ -11,7 +11,7 @@ import {
 	TierTableDefinition,
 } from "../../apis/tiers";
 
-type TierId = string;
+type TierKey = string;
 
 export const uncategorizedTier: TierDefinition = {
 	id: "uncategorized",
@@ -22,21 +22,18 @@ export const uncategorizedTier: TierDefinition = {
 const createDefaultMapping = (
 	definition: TierTableDefinition | null,
 ): TierMapping => {
-	const mapping: TierMapping = { mappings: [] };
+	const mapping: TierMapping = { mappings: {} };
 	if (!definition) {
 		return mapping;
 	}
-	definition.tiers.map((tier) =>
-		mapping.mappings.push({ key: tier.id, images: [] }),
-	);
-	mapping.mappings.push({
-		key: uncategorizedTier.id,
-		images: definition.images,
+	definition.tiers.map((tier) => {
+		mapping.mappings[tier.id] = { images: [] };
 	});
+	mapping.mappings[uncategorizedTier.id] = { images: definition.images };
 	return mapping;
 };
 
-const tierMappingEffect: (id: TierId) => AtomEffect<TierMapping> =
+const tierMappingEffect: (id: TierKey) => AtomEffect<TierMapping> =
 	(id) => ({ setSelf, onSet, getPromise }) => {
 		const savedValue = localStorage.getItem(id);
 		if (savedValue != null) {
@@ -59,7 +56,7 @@ const tierMappingEffect: (id: TierId) => AtomEffect<TierMapping> =
 
 export const currentTierQuery = selectorFamily<
 	TierTableDefinition | null,
-	TierId
+	TierKey
 >({
 	key: "currentTier",
 	get: (id) => async () => {
@@ -75,23 +72,20 @@ export const currentTierQuery = selectorFamily<
 });
 
 export type TierMapping = {
-	mappings: {
-		key: TierId;
-		images: string[];
-	}[];
+	mappings: Record<TierKey, { images: string[] }>;
 };
 
-const tierMappingStore = atomFamily<TierMapping, TierId>({
+const tierMappingStore = atomFamily<TierMapping, TierKey>({
 	key: "tierMappingState",
-	default: { mappings: [] },
+	default: { mappings: {} },
 	effects: (id) => [tierMappingEffect(id)],
 });
 
-export const useTierMapping = (id: TierId) => {
+export const useTierMapping = (id: TierKey) => {
 	return useRecoilValue(tierMappingStore(id));
 };
 
-export const useSetTierMapping = (id: TierId) => {
+export const useSetTierMapping = (id: TierKey) => {
 	return useSetRecoilState(tierMappingStore(id));
 };
 

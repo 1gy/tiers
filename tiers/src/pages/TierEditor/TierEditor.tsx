@@ -9,6 +9,7 @@ import {
 	DragEndEvent,
 	rectIntersection,
 } from "@dnd-kit/core";
+import { produce } from "immer";
 
 import { TierRow } from "./Row";
 import {
@@ -32,9 +33,9 @@ const findRow = (
 	if (row) {
 		return row.id;
 	}
-	for (const v of mapping.mappings) {
-		if (v.images.find((s) => s === id)) {
-			return v.key;
+	for (const [key, value] of Object.entries(mapping.mappings)) {
+		if (value.images.find((s) => s === id)) {
+			return key;
 		}
 	}
 	return null;
@@ -75,25 +76,18 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 		) {
 			return null;
 		}
-		setTierMapping((prev) => {
-			return {
-				...prev,
-				mappings: prev.mappings.map((v) => {
-					if (v.key === activeColumn) {
-						return {
-							...v,
-							images: v.images.filter((img) => img !== activeId),
-						};
-					} else if (v.key === overColumn) {
-						return {
-							...v,
-							images: [...v.images, activeId],
-						};
+		setTierMapping(
+			produce((draft) => {
+				Object.entries(draft.mappings).forEach(([key, value]) => {
+					if (key === activeColumn) {
+						value.images = value.images.filter((img) => img !== activeId);
 					}
-					return v;
-				}),
-			};
-		});
+					if (key === overColumn) {
+						value.images.push(activeId);
+					}
+				});
+			}),
+		);
 		return;
 	};
 
@@ -110,28 +104,23 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 		) {
 			return null;
 		}
-		setTierMapping((prev) => {
-			return {
-				...prev,
-				mappings: prev.mappings.map((v) => {
-					if (v.key === activeColumn) {
-						const activeIndex = v.images.findIndex((i) => i === activeId);
-						const overIndex = v.images.findIndex((i) => i === overId);
+		setTierMapping(
+			produce((draft) => {
+				Object.entries(draft.mappings).forEach(([key, value]) => {
+					if (key === activeColumn) {
+						const activeIndex = value.images.findIndex((i) => i === activeId);
+						const overIndex = value.images.findIndex((i) => i === overId);
 						if (
 							0 <= activeIndex &&
 							0 <= overIndex &&
 							activeIndex !== overIndex
 						) {
-							return {
-								...v,
-								images: swapArray(v.images, activeIndex, overIndex),
-							};
+							value.images = swapArray(value.images, activeIndex, overIndex);
 						}
 					}
-					return v;
-				}),
-			};
-		});
+				});
+			}),
+		);
 		return;
 	};
 
@@ -150,22 +139,17 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 				direction="column"
 				sx={{ userSelect: "none" }}
 			>
-				{tierMapping.mappings
-					.filter((item) => definition?.tiers.some((v) => v.id === item.key))
-					.map((item) => (
-						<TierRow
-							key={item.key}
-							tier={definition?.tiers.find((v) => v.id === item.key)!}
-							images={item.images}
-						/>
-					))}
+				{definition?.tiers.map((tier) => (
+					<TierRow
+						key={tier.id}
+						tier={tier}
+						images={tierMapping.mappings[tier.id]?.images || []}
+					/>
+				))}
 				<TierRow
 					key={uncategorizedTier.id}
 					tier={uncategorizedTier}
-					images={
-						tierMapping.mappings.find((v) => v.key === uncategorizedTier.id)
-							?.images!
-					}
+					images={tierMapping.mappings[uncategorizedTier.id]?.images || []}
 				/>
 			</MuiGrid>
 		</DndContext>
