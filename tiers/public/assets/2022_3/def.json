@@ -1,0 +1,14 @@
+{
+  "title": "2022年 秋アニメ",
+  "images": ["2022_3_4uso.jpg", "2022_3_akibamaidwar.jpg", "2022_3_akulas.jpg", "2022_3_aninana-3-2.jpg", "2022_3_arknights.jpg", "2022_3_beasttamer.jpg", "2022_3_berserk-me.jpg", "2022_3_bleach.jpg", "2022_3_bluelock.jpg", "2022_3_bocchi-rocks.jpg", "2022_3_chainsawman.jpg", "2022_3_cooldoji.jpg", "2022_3_digicarat-reiwa.jpg", "2022_3_diy.jpg", "2022_3_edgerunners.jpg", "2022_3_eternalboys.jpg", "2022_3_exception.jpg", "2022_3_fumetsunoanatae-2.jpg", "2022_3_futoku.jpg", "2022_3_fuukoi.jpg", "2022_3_g-witch.jpg", "2022_3_hanzawasan.jpg", "2022_3_harecam.jpg", "2022_3_heroaca-6.jpg", "2022_3_hoshiiro.jpg", "2022_3_humanbug.jpg", "2022_3_iruma3.jpg", "2022_3_isekaiojisan.jpg", "2022_3_jojo6-2.jpg", "2022_3_kokyu.jpg", "2022_3_loveflops.jpg", "2022_3_mana-lom-tc.jpg", "2022_3_megaton-musashi-2.jpg", "2022_3_mobpsycho100-3.jpg", "2022_3_mushikaburihime.jpg", "2022_3_muv-luv-alternative-2.jpg", "2022_3_ninja-ittoki.jpg", "2022_3_nouminkanren.jpg", "2022_3_nyotaika.png", "2022_3_orekun.jpg", "2022_3_petergrill-2.jpg", "2022_3_romantic-killer.jpg", "2022_3_shadow-garden.jpg", "2022_3_shinmai-renkin.jpg", "2022_3_shippona.jpg", "2022_3_spy-family.jpg", "2022_3_tenken.jpg", "2022_3_tigerandbunny2-2.jpg", "2022_3_tonikawa.jpg", "2022_3_umayuru.jpg", "2022_3_uy-allstars.jpg", "2022_3_uzakichan-2.jpg", "2022_3_vazzrock.jpg", "2022_3_yamanosusume-ns.jpg", "2022_3_yowapeda-lb.jpg"],
+  "tiers": [
+    { "key": "S", "label": "S", "color": "#ff7f7f" },
+    { "key": "A", "label": "A", "color": "#ffbf7f" },
+    { "key": "B", "label": "B", "color": "#ffdf7f" },
+    { "key": "C", "label": "C", "color": "#ffff7f" },
+    { "key": "D", "label": "D", "color": "#bfff7f" },
+    { "key": "E", "label": "E", "color": "#7fff7f" },
+    { "key": "F", "label": "F", "color": "#7fffff" },
+    { "key": "G", "label": "G", "color": "#7fbfff" }
+  ]
+}
