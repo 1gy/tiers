@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import {
-	atom,
+	AtomEffect,
+	atomFamily,
 	selectorFamily,
 	useRecoilValue,
 	useSetRecoilState,
@@ -11,9 +11,48 @@ import {
 	TierTableDefinition,
 } from "../../apis/tiers";
 
+type TierId = string;
+
+const createDefaultMapping = (
+	definition: TierTableDefinition | null,
+): TierMapping[] => {
+	const mapping: TierMapping[] = [];
+	if (!definition) {
+		return mapping;
+	}
+	definition.tiers.map((tier) => mapping.push({ tier, images: [] }));
+	mapping.push({
+		tier: { id: "uncategorized", label: "", color: "gray" },
+		images: definition.images,
+	});
+	return mapping;
+};
+
+const tierMappingEffect: (id: TierId) => AtomEffect<TierMapping[]> =
+	(id) => ({ setSelf, onSet, getPromise }) => {
+		const savedValue = localStorage.getItem(id);
+		if (savedValue != null) {
+			setSelf(JSON.parse(savedValue));
+		} else {
+			setSelf(
+				getPromise(currentTierQuery(id)).then((def) =>
+					createDefaultMapping(def),
+				),
+			);
+		}
+
+		onSet((newValue, _, isReset) => {
+			if (isReset) {
+				localStorage.removeItem(id);
+			} else {
+				localStorage.setItem(id, JSON.stringify(newValue));
+			}
+		});
+	};
+
 export const currentTierQuery = selectorFamily<
 	TierTableDefinition | null,
-	string
+	TierId
 >({
 	key: "currentTier",
 	get: (id) => async () => {
@@ -33,17 +72,18 @@ export type TierMapping = {
 	images: string[];
 };
 
-const tierMappingStore = atom<TierMapping[]>({
+const tierMappingStore = atomFamily<TierMapping[], TierId>({
 	key: "tierMappingState",
 	default: [],
+	effects: (id) => [tierMappingEffect(id)],
 });
 
-export const useTierMapping = () => {
-	return useRecoilValue(tierMappingStore);
+export const useTierMapping = (id: TierId) => {
+	return useRecoilValue(tierMappingStore(id));
 };
 
-export const useSetTierMapping = () => {
-	return useSetRecoilState(tierMappingStore);
+export const useSetTierMapping = (id: TierId) => {
+	return useSetRecoilState(tierMappingStore(id));
 };
 
 export type TierTable = {
@@ -53,22 +93,6 @@ export type TierTable = {
 
 export const useTierDefinition = (id: string) => {
 	const definition = useRecoilValue(currentTierQuery(id));
-	const setTierMapping = useSetRecoilState(tierMappingStore);
-
-	useEffect(() => {
-		if (definition) {
-			setTierMapping(() => {
-				const mapping: TierMapping[] = [];
-				definition.tiers.map((tier) => mapping.push({ tier, images: [] }));
-				mapping.push({
-					tier: { id: "uncategorized", label: "", color: "gray" },
-					images: definition.images,
-				});
-				return mapping;
-			});
-		}
-	}, [definition]);
-
 	return {
 		definition,
 	};
