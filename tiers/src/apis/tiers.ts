@@ -2,8 +2,10 @@ import { assetsUrl } from "../libs/constants";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
+export type TierKey = string;
+
 export type TierDefinition = {
-	readonly id: string;
+	readonly id: TierKey;
 	readonly label: string;
 	readonly color: string;
 };

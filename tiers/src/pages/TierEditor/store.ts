@@ -13,22 +13,30 @@ import {
 
 type TierId = string;
 
+export const uncategorizedTier: TierDefinition = {
+	id: "uncategorized",
+	color: "gray",
+	label: "",
+};
+
 const createDefaultMapping = (
 	definition: TierTableDefinition | null,
-): TierMapping[] => {
-	const mapping: TierMapping[] = [];
+): TierMapping => {
+	const mapping: TierMapping = { mappings: [] };
 	if (!definition) {
 		return mapping;
 	}
-	definition.tiers.map((tier) => mapping.push({ tier, images: [] }));
-	mapping.push({
-		tier: { id: "uncategorized", label: "", color: "gray" },
+	definition.tiers.map((tier) =>
+		mapping.mappings.push({ key: tier.id, images: [] }),
+	);
+	mapping.mappings.push({
+		key: uncategorizedTier.id,
 		images: definition.images,
 	});
 	return mapping;
 };
 
-const tierMappingEffect: (id: TierId) => AtomEffect<TierMapping[]> =
+const tierMappingEffect: (id: TierId) => AtomEffect<TierMapping> =
 	(id) => ({ setSelf, onSet, getPromise }) => {
 		const savedValue = localStorage.getItem(id);
 		if (savedValue != null) {
@@ -40,7 +48,6 @@ const tierMappingEffect: (id: TierId) => AtomEffect<TierMapping[]> =
 				),
 			);
 		}
-
 		onSet((newValue, _, isReset) => {
 			if (isReset) {
 				localStorage.removeItem(id);
@@ -68,13 +75,15 @@ export const currentTierQuery = selectorFamily<
 });
 
 export type TierMapping = {
-	tier: TierDefinition;
-	images: string[];
+	mappings: {
+		key: TierId;
+		images: string[];
+	}[];
 };
 
-const tierMappingStore = atomFamily<TierMapping[], TierId>({
+const tierMappingStore = atomFamily<TierMapping, TierId>({
 	key: "tierMappingState",
-	default: [],
+	default: { mappings: [] },
 	effects: (id) => [tierMappingEffect(id)],
 });
 

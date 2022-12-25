@@ -13,27 +13,28 @@ import {
 import { TierRow } from "./Row";
 import {
 	TierMapping,
+	uncategorizedTier,
 	useSetTierMapping,
 	useTierDefinition,
 	useTierMapping,
 } from "./store";
-import type { TierDefinition, TierTableDefinition } from "../../apis/tiers";
+import type { TierKey, TierTableDefinition } from "../../apis/tiers";
 
 const findRow = (
 	definition: TierTableDefinition | null,
-	mapping: TierMapping[],
+	mapping: TierMapping,
 	id: string | null,
-): TierDefinition | null => {
+): TierKey | null => {
 	if (!id) {
 		return null;
 	}
 	const row = definition?.tiers.find((v) => v.label === id);
 	if (row) {
-		return row;
+		return row.id;
 	}
-	for (const v of mapping) {
+	for (const v of mapping.mappings) {
 		if (v.images.find((s) => s === id)) {
-			return v.tier;
+			return v.key;
 		}
 	}
 	return null;
@@ -65,7 +66,7 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 		const { active, over } = event;
 		const activeId = String(active.id);
 		const overId = over ? String(over.id) : null;
-		const activeColumn = findRow(definition, tierMapping, activeId);
+		const activeColumn = findRow(definition, tierMapping, activeId); // TODO activeColumnKey
 		const overColumn = findRow(definition, tierMapping, overId);
 		if (
 			activeColumn == null ||
@@ -75,20 +76,23 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 			return null;
 		}
 		setTierMapping((prev) => {
-			return prev.map((v) => {
-				if (v.tier.id === activeColumn.id) {
-					return {
-						...v,
-						images: v.images.filter((img) => img !== activeId),
-					};
-				} else if (v.tier.id === overColumn.id) {
-					return {
-						...v,
-						images: [...v.images, activeId],
-					};
-				}
-				return v;
-			});
+			return {
+				...prev,
+				mappings: prev.mappings.map((v) => {
+					if (v.key === activeColumn) {
+						return {
+							...v,
+							images: v.images.filter((img) => img !== activeId),
+						};
+					} else if (v.key === overColumn) {
+						return {
+							...v,
+							images: [...v.images, activeId],
+						};
+					}
+					return v;
+				}),
+			};
 		});
 		return;
 	};
@@ -107,19 +111,26 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 			return null;
 		}
 		setTierMapping((prev) => {
-			return prev.map((v) => {
-				if (v.tier.id === activeColumn.id) {
-					const activeIndex = v.images.findIndex((i) => i === activeId);
-					const overIndex = v.images.findIndex((i) => i === overId);
-					if (0 <= activeIndex && 0 <= overIndex && activeIndex !== overIndex) {
-						return {
-							...v,
-							images: swapArray(v.images, activeIndex, overIndex),
-						};
+			return {
+				...prev,
+				mappings: prev.mappings.map((v) => {
+					if (v.key === activeColumn) {
+						const activeIndex = v.images.findIndex((i) => i === activeId);
+						const overIndex = v.images.findIndex((i) => i === overId);
+						if (
+							0 <= activeIndex &&
+							0 <= overIndex &&
+							activeIndex !== overIndex
+						) {
+							return {
+								...v,
+								images: swapArray(v.images, activeIndex, overIndex),
+							};
+						}
 					}
-				}
-				return v;
-			});
+					return v;
+				}),
+			};
 		});
 		return;
 	};
@@ -139,13 +150,23 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 				direction="column"
 				sx={{ userSelect: "none" }}
 			>
-				{tierMapping.map((item) => (
-					<TierRow
-						key={item.tier.label}
-						tier={item.tier}
-						images={item.images}
-					/>
-				))}
+				{tierMapping.mappings
+					.filter((item) => definition?.tiers.some((v) => v.id === item.key))
+					.map((item) => (
+						<TierRow
+							key={item.key}
+							tier={definition?.tiers.find((v) => v.id === item.key)!}
+							images={item.images}
+						/>
+					))}
+				<TierRow
+					key={uncategorizedTier.id}
+					tier={uncategorizedTier}
+					images={
+						tierMapping.mappings.find((v) => v.key === uncategorizedTier.id)
+							?.images!
+					}
+				/>
 			</MuiGrid>
 		</DndContext>
 	);
