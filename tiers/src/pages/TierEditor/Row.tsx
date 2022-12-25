@@ -4,7 +4,11 @@ import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import { useDroppable } from "@dnd-kit/core";
 import { TierCard } from "./Card";
 import { TierLabel } from "./Label";
-import { MuiBox, MuiGrid } from "../../components/presentational/Mui";
+import {
+	MuiBox,
+	MuiDivider,
+	MuiGrid,
+} from "../../components/presentational/Mui";
 
 export type TierRowProps = {
 	tier: TierDefinition;
@@ -28,6 +32,7 @@ export const TierRow: FC<TierRowProps> = memo(({ tier, images }) => {
 					))}
 				</MuiGrid>
 			</MuiGrid>
+			<MuiDivider />
 		</SortableContext>
 	);
 });

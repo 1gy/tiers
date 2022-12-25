@@ -1,5 +1,9 @@
 import { FC, memo } from "react";
-import { MuiGrid } from "../../components/presentational/Mui";
+import {
+	MuiBox,
+	MuiGrid,
+	MuiTypography,
+} from "../../components/presentational/Mui";
 import {
 	DndContext,
 	useSensor,
@@ -126,32 +130,45 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 
 	const sensors = useSensors(useSensor(PointerSensor));
 	return (
-		<DndContext
-			sensors={sensors}
-			collisionDetection={rectIntersection}
-			onDragOver={handleDragOver}
-			onDragEnd={handleDragEnd}
-			autoScroll={true}
-		>
-			<MuiGrid
-				container
-				width="100%"
-				direction="column"
-				sx={{ userSelect: "none" }}
+		<>
+			<MuiBox
+				sx={{
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
+				}}
 			>
-				{definition?.tiers.map((tier) => (
+				<MuiTypography variant="h4" component="h1">
+					{definition?.title}
+				</MuiTypography>
+			</MuiBox>
+			<DndContext
+				sensors={sensors}
+				collisionDetection={rectIntersection}
+				onDragOver={handleDragOver}
+				onDragEnd={handleDragEnd}
+				autoScroll={true}
+			>
+				<MuiGrid
+					container
+					width="100%"
+					direction="column"
+					sx={{ userSelect: "none" }}
+				>
+					{definition?.tiers.map((tier) => (
+						<TierRow
+							key={tier.key}
+							tier={tier}
+							images={tierMapping.mappings[tier.key]?.images || []}
+						/>
+					))}
 					<TierRow
-						key={tier.key}
-						tier={tier}
-						images={tierMapping.mappings[tier.key]?.images || []}
+						key={uncategorizedTier.key}
+						tier={uncategorizedTier}
+						images={tierMapping.mappings[uncategorizedTier.key]?.images || []}
 					/>
-				))}
-				<TierRow
-					key={uncategorizedTier.key}
-					tier={uncategorizedTier}
-					images={tierMapping.mappings[uncategorizedTier.key]?.images || []}
-				/>
-			</MuiGrid>
-		</DndContext>
+				</MuiGrid>
+			</DndContext>
+		</>
 	);
 });
