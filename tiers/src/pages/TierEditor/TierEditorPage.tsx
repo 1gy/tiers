@@ -20,7 +20,7 @@ const Fallback: FC<{ error: Error; errorInfo: ErrorInfo }> = ({
 
 const Title: FC = () => <Appbar text="tiers" />;
 
-const Main: FC = () => (
+const Main: FC<{ defKey: string }> = ({ defKey }) => (
 	<ErrorBoundary
 		fallback={(error, errorInfo) => (
 			<Fallback error={error} errorInfo={errorInfo} />
@@ -33,14 +33,14 @@ const Main: FC = () => (
 				p={1}
 				sx={{ overflowY: "scroll", overflowX: "hidden" }}
 			>
-				<TierEditor defKey="2022_3" />
+				<TierEditor defKey={defKey} />
 			</MuiBox>
 		</Suspense>
 	</ErrorBoundary>
 );
 
-export const TierEditorPage: FC = () => (
+export const TierEditorPage: FC<{ defKey: string }> = ({ defKey }) => (
 	<Page>
-		<MainLayout title={<Title />} main={<Main />} />
+		<MainLayout title={<Title />} main={<Main defKey={defKey} />} />
 	</Page>
 );

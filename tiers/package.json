@@ -15,11 +15,13 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.11.1",
+    "history": "^5.3.0",
     "immer": "^9.0.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recoil": "^0.7.6",
     "recoil-sync": "^0.2.0",
+    "rocon": "^1.2.8",
     "rome": "^11.0.0"
   },
   "devDependencies": {
