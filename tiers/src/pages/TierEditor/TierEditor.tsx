@@ -45,18 +45,18 @@ const findRow = (
 	return null;
 };
 
-const swapArray = <T extends unknown>(
+const swapOrder = <T extends unknown>(
 	items: T[],
-	first: number,
-	second: number,
-): T[] =>
-	items.map((e, index) =>
-		index === first
-			? (items[second] as T)
-			: index === second
-			? (items[first] as T)
-			: e,
-	);
+	active: number,
+	over: number,
+): T[] => {
+	const item = items[active];
+	if (!item) {
+		return items;
+	}
+	const filtered = items.filter((_, index) => index !== active);
+	return [...filtered.slice(0, over), item, ...filtered.slice(over)];
+};
 
 export type TierEditorProps = {
 	defKey: string;
@@ -119,7 +119,7 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 							0 <= overIndex &&
 							activeIndex !== overIndex
 						) {
-							value.images = swapArray(value.images, activeIndex, overIndex);
+							value.images = swapOrder(value.images, activeIndex, overIndex);
 						}
 					}
 				});
