@@ -6,6 +6,7 @@ import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
 import {
 	MuiBox,
+	MuiIconButton,
 	MuiLink,
 	MuiTypography,
 } from "../../components/presentational/Mui";
@@ -13,9 +14,13 @@ import { Page } from "../../components/presentational/Page";
 import { TierEditor } from "./TierEditor";
 import { useNavigate } from "rocon/react";
 import { routes } from "../Routes";
+import { MuiSettingsIcon } from "../../components/presentational/MuiIcons";
+import { SettingsDialog } from "../../dialogs/Settings/SettingsDialog";
+import { useOpenDialog } from "../../dialogs/Settings/store";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
 	const navigate = useNavigate();
+	const openSettingsDialog = useOpenDialog();
 
 	return (
 		<Appbar>
@@ -29,6 +34,18 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 			</MuiLink>
 			<BreadcrumbsSeparator />
 			<MuiTypography>{defKey}</MuiTypography>
+
+			<MuiBox x-role="spacer" flexGrow={1} />
+
+			<MuiIconButton
+				color="inherit"
+				sx={{ mr: 1 }}
+				onClick={() => openSettingsDialog()}
+			>
+				<MuiSettingsIcon />
+			</MuiIconButton>
+
+			<SettingsDialog />
 		</Appbar>
 	);
 };
