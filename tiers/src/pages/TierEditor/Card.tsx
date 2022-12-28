@@ -1,8 +1,8 @@
 import { FC, memo } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { iconSize } from "./constants";
 import { MuiBox } from "../../components/presentational/Mui";
+import { useCardSize } from "../../hooks/uiSettings";
 
 export type TierCardProps = {
 	image: string;
@@ -15,6 +15,7 @@ export const TierCard: FC<TierCardProps> = memo(({ image }) => {
 	const style = {
 		transform: CSS.Transform.toString(transform),
 	};
+	const cardSize = useCardSize();
 
 	return (
 		<MuiBox
@@ -28,8 +29,8 @@ export const TierCard: FC<TierCardProps> = memo(({ image }) => {
 			<img
 				src={image}
 				alt=""
-				width={iconSize}
-				height={iconSize}
+				width={cardSize}
+				height={cardSize}
 				style={{ verticalAlign: "top" }}
 			/>
 		</MuiBox>
