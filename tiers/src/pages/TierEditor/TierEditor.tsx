@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, useState } from "react";
 import {
 	MuiBox,
 	MuiGrid,
@@ -12,10 +12,13 @@ import {
 	DragOverEvent,
 	DragEndEvent,
 	rectIntersection,
+	DragOverlay,
+	DragStartEvent,
 } from "@dnd-kit/core";
 import { produce } from "immer";
 
 import { TierRow } from "./Row";
+import { Card } from "./Card";
 import {
 	TierMapping,
 	uncategorizedTier,
@@ -66,6 +69,11 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 	const definition = useTierDefinition(props.defKey);
 	const tierMapping = useTierMapping(props.defKey);
 	const setTierMapping = useSetTierMapping(props.defKey);
+	const [currentImage, setCurrentImage] = useState<string | null>(null);
+
+	const handleDragStart = (event: DragStartEvent) => {
+		setCurrentImage(String(event.active.id));
+	};
 
 	const handleDragOver = (event: DragOverEvent) => {
 		const { active, over } = event;
@@ -145,6 +153,7 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 			<DndContext
 				sensors={sensors}
 				collisionDetection={rectIntersection}
+				onDragStart={handleDragStart}
 				onDragOver={handleDragOver}
 				onDragEnd={handleDragEnd}
 				autoScroll={true}
@@ -168,6 +177,9 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 						images={tierMapping.mappings[uncategorizedTier.key]?.images || []}
 					/>
 				</MuiGrid>
+				<DragOverlay>
+					{currentImage != null ? <Card image={currentImage} overlay /> : null}
+				</DragOverlay>
 			</DndContext>
 		</>
 	);
