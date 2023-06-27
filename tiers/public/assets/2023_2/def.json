@@ -1,0 +1,14 @@
+{
+  "title": "2023年 夏アニメ",
+  "images": ["2023_2_ainoidenshi_off.jpg", "2023_2_AYAKA_animePR.jpg", "2023_2_ayakashi_anime.jpg", "2023_2_undeadgirl_PR.jpg", "2023_2_ikimonosan_.jpg", "2023_2_smallsenpai_pr.jpg", "2023_2_ultraman_series.jpg", "2023_2_eiyu_anime.jpg", "2023_2_ohoku.jpg", "2023_2_okashinatensei.jpg", "2023_2_kozame_info.jpg", "2023_2_cfvanguard_PR.png", "2023_2_kanokari_anime.jpg", "2023_2_GJ_yohane.jpg", "2023_2_5Hanayome_anime.jpg", "2023_2_jitsuoresaikyo.jpg", "2023_2_jihanki_anime.jpg", "2023_2_bocchan_anime.jpg", "2023_2_shadowverse_anm.jpg", "2023_2_sugarapple_PR.jpg", "2023_2_animejujutsu.jpg", "2023_2_shiroseijyo_tv.jpg", "2023_2_SYN_noir.jpg", "2023_2_Sukimega.jpg", "2023_2_spyroom_anime.jpg", "2023_2_spriggan_anime.jpg", "2023_2_seija_anime.jpg", "2023_2_fafnerprojectt.jpg", "2023_2_Zom100_anime_JP.jpg", "2023_2_DG_anime.jpg", "2023_2_dekineko_anime.jpg", "2023_2_temple_tvanime.jpg", "2023_2_tonikawa_anime.jpg", "2023_2_nanatsuma_pr.jpg", "2023_2_bastard_PR.jpg", "2023_2_anime_maousama.png", "2023_2_bang_dream_info.jpg", "2023_2_baki_anime.jpg", "2023_2_lastame_pr.jpg", "2023_2_hyakusho_kizoku.jpg", "2023_2_AnimeFesta_Info.jpg", "2023_2_Fate_SF_Anime.jpg", "2023_2_feirenzaihi.jpg", "2023_2_@BLEACHanimation.jpg", "2023_2_bungosd_anime.jpg", "2023_2_Helck_anime.jpg", "2023_2_horimiya_anime.jpg", "2023_2_maohgakuin.jpg", "2023_2_masamune_tv.jpg", "2023_2_mushokutensei_A.jpg", "2023_2_mononogatari_pr.jpg", "2023_2_yamishibai_TX.jpg", "2023_2_yumemiru_anime.jpg", "2023_2_mujina_company.jpg", "2023_2_liar2_official.png", "2023_2_Ryza_PR.jpg", "2023_2_ruroken_anime.jpg", "2023_2_level1_anime.jpg", "2023_2_lv1room.jpg", "2023_2_watashino_info.jpg"],
+  "tiers": [
+    { "key": "S", "label": "S", "color": "#ff7f7f" },
+    { "key": "A", "label": "A", "color": "#ffbf7f" },
+    { "key": "B", "label": "B", "color": "#ffdf7f" },
+    { "key": "C", "label": "C", "color": "#ffff7f" },
+    { "key": "D", "label": "D", "color": "#bfff7f" },
+    { "key": "E", "label": "E", "color": "#7fff7f" },
+    { "key": "F", "label": "F", "color": "#7fffff" },
+    { "key": "G", "label": "G", "color": "#7fbfff" }
+  ]
+}
