@@ -4,8 +4,9 @@ import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import { useDroppable } from "@dnd-kit/core";
 import { DraggableCard } from "./Card";
 import { TierLabel } from "./Label";
-import { MuiBox, MuiDivider } from "../../components/presentational/Mui";
+import { MuiBox } from "../../components/presentational/Mui";
 import { css } from "../../../styled-system/css";
+import { Divider } from "../../components/presentational/Divider";
 
 export type TierRowProps = {
 	tier: TierDefinition;
@@ -59,7 +60,7 @@ export const TierRow: FC<TierRowProps> = memo(({ tier, images }) => {
 					))}
 				</ImageContainer>
 			</RowGrid>
-			<MuiDivider />
+			<Divider />
 		</SortableContext>
 	);
 });
