@@ -1,15 +1,14 @@
 import type { FC } from "react";
-import {
-	MuiDialog,
-	MuiDialogActions,
-	MuiDialogContent,
-	MuiDialogContentText,
-	MuiDialogTitle,
-} from "../../components/presentational/Mui";
 import { useCardSize, useSetCardSize } from "../../hooks/uiSettings";
 import { useCloseDialog, useIsOpenDialog } from "./store";
 import { Button } from "../../components/presentational/Button";
 import { Slider } from "../../components/presentational/Slider";
+import {
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+} from "../../components/presentational/Dialog";
 
 export type SettingsDialogProps = {
 	//
@@ -26,21 +25,19 @@ export const SettingsDialog: FC<SettingsDialogProps> = () => {
 	};
 
 	return (
-		<MuiDialog open={isOpen} onClose={closeDialog} fullWidth>
-			<MuiDialogTitle>設定</MuiDialogTitle>
-			<MuiDialogContent>
-				<MuiDialogContentText>
-					<Slider
-						min={32}
-						max={128}
-						value={cardSize}
-						onChange={handleCardSizeChange}
-					/>
-				</MuiDialogContentText>
-			</MuiDialogContent>
-			<MuiDialogActions>
+		<Dialog open={isOpen} onClose={closeDialog}>
+			<DialogTitle>設定</DialogTitle>
+			<DialogContent>
+				<Slider
+					min={32}
+					max={128}
+					value={cardSize}
+					onChange={handleCardSizeChange}
+				/>
+			</DialogContent>
+			<DialogActions>
 				<Button onClick={closeDialog}>閉じる</Button>
-			</MuiDialogActions>
-		</MuiDialog>
+			</DialogActions>
+		</Dialog>
 	);
 };

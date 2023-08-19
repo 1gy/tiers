@@ -1,5 +1,6 @@
-import React, { forwardRef } from "react";
-import { cva } from "../../../styled-system/css";
+import { forwardRef } from "react";
+import type { ReactNode } from "react";
+import { cva, cx } from "../../../styled-system/css";
 
 const typography = cva({
 	base: {},
@@ -21,6 +22,14 @@ const typography = cva({
 				fontSize: "3xl",
 				fontWeight: "normal",
 			},
+			h5: {
+				fontSize: "2xl",
+				fontWeight: "normal",
+			},
+			h6: {
+				fontSize: "xl",
+				fontWeight: "medium",
+			},
 			body1: {
 				fontWeight: "normal",
 			},
@@ -31,16 +40,18 @@ const typography = cva({
 	},
 });
 
-export const Typography = forwardRef<
-	HTMLDivElement,
-	{
-		children: React.ReactNode;
-		variant?: "h1" | "h2" | "h3" | "h4" | "body1";
-	}
->(({ children, variant = "body1" }, ref) => {
-	return (
-		<p ref={ref} className={typography({ variant })}>
-			{children}
-		</p>
-	);
-});
+type TypographyProps = {
+	children: ReactNode;
+	variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body1";
+	className?: string;
+};
+
+export const Typography = forwardRef<HTMLDivElement, TypographyProps>(
+	({ children, className, variant = "body1" }, ref) => {
+		return (
+			<p ref={ref} className={cx(typography({ variant }), className)}>
+				{children}
+			</p>
+		);
+	},
+);
