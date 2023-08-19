@@ -12,9 +12,18 @@ export default defineConfig({
 
 	// Useful for theme customization
 	theme: {
-		extend: {},
+		extend: {
+			tokens: {
+				colors: {
+					"app.primary": { value: "{colors.blue.500}" },
+				},
+			},
+		},
 	},
 
 	// The output directory for your css system
 	outdir: "styled-system",
+
+	// strict
+	strictTokens: true,
 });
