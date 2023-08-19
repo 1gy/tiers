@@ -5,11 +5,11 @@ import {
 	MuiDialogContent,
 	MuiDialogContentText,
 	MuiDialogTitle,
-	MuiSlider,
 } from "../../components/presentational/Mui";
 import { useCardSize, useSetCardSize } from "../../hooks/uiSettings";
 import { useCloseDialog, useIsOpenDialog } from "./store";
 import { Button } from "../../components/presentational/Button";
+import { Slider } from "../../components/presentational/Slider";
 
 export type SettingsDialogProps = {
 	//
@@ -30,9 +30,7 @@ export const SettingsDialog: FC<SettingsDialogProps> = () => {
 			<MuiDialogTitle>設定</MuiDialogTitle>
 			<MuiDialogContent>
 				<MuiDialogContentText>
-					<MuiSlider
-						sx={{ mt: 4 }}
-						valueLabelDisplay="on"
+					<Slider
 						min={32}
 						max={128}
 						value={cardSize}
