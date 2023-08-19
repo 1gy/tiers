@@ -1,6 +1,6 @@
-import { MuiGrid } from "./Mui";
 import type { FC, ReactNode } from "react";
 import { Page } from "./Page";
+import { css } from "../../../styled-system/css";
 
 type MainLayoutProps = {
 	title: ReactNode;
@@ -10,18 +10,24 @@ type MainLayoutProps = {
 export const MainLayout: FC<MainLayoutProps> = (props) => {
 	return (
 		<Page>
-			<MuiGrid
-				container={true}
-				direction="column"
-				wrap="nowrap"
-				width="100%"
-				height="100%"
+			<div
+				className={css({
+					display: "flex",
+					flexDir: "column",
+					w: "full",
+					h: "full",
+				})}
 			>
-				<MuiGrid item={true}>{props.title}</MuiGrid>
-				<MuiGrid item={true} flexGrow="1" overflow="hidden">
+				<div className={css({})}>{props.title}</div>
+				<div
+					className={css({
+						flexGrow: "1",
+						overflow: "hidden",
+					})}
+				>
 					{props.main}
-				</MuiGrid>
-			</MuiGrid>
+				</div>
+			</div>
 		</Page>
 	);
 };
