@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { MuiBox } from "./Mui";
+import { css } from "../../../styled-system/css";
 
 export const BreadcrumbsSeparator: FC = () => (
-	<MuiBox sx={{ userSelect: "none", ml: 1, mr: 1 }}>/</MuiBox>
+	<div className={css({ userSelect: "none", ml: "1", mr: "1" })}>/</div>
 );
