@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import {
-	MuiButton,
 	MuiDialog,
 	MuiDialogActions,
 	MuiDialogContent,
@@ -10,6 +9,7 @@ import {
 } from "../../components/presentational/Mui";
 import { useCardSize, useSetCardSize } from "../../hooks/uiSettings";
 import { useCloseDialog, useIsOpenDialog } from "./store";
+import { Button } from "../../components/presentational/Button";
 
 export type SettingsDialogProps = {
 	//
@@ -41,7 +41,7 @@ export const SettingsDialog: FC<SettingsDialogProps> = () => {
 				</MuiDialogContentText>
 			</MuiDialogContent>
 			<MuiDialogActions>
-				<MuiButton onClick={closeDialog}>閉じる</MuiButton>
+				<Button onClick={closeDialog}>閉じる</Button>
 			</MuiDialogActions>
 		</MuiDialog>
 	);
