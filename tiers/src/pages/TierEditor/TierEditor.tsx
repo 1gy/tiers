@@ -1,9 +1,5 @@
-import { FC, memo, useState } from "react";
-import {
-	MuiBox,
-	MuiGrid,
-	MuiTypography,
-} from "../../components/presentational/Mui";
+import { FC, forwardRef, memo, useState } from "react";
+import { MuiBox, MuiTypography } from "../../components/presentational/Mui";
 import {
 	DndContext,
 	useSensor,
@@ -27,6 +23,7 @@ import {
 	useTierMapping,
 } from "./store";
 import type { TierKey, TierTableDefinition } from "../../apis/tiers";
+import { css } from "../../../styled-system/css";
 
 const findRow = (
 	definition: TierTableDefinition | null,
@@ -60,6 +57,23 @@ const swapOrder = <T extends unknown>(
 	const filtered = items.filter((_, index) => index !== active);
 	return [...filtered.slice(0, over), item, ...filtered.slice(over)];
 };
+
+const TiersContainer = forwardRef<
+	HTMLDivElement,
+	{ children: React.ReactNode }
+>(({ children }, ref) => (
+	<div
+		ref={ref}
+		className={css({
+			display: "flex",
+			flexDirection: "column",
+			userSelect: "none",
+			w: "full",
+		})}
+	>
+		{children}
+	</div>
+));
 
 export type TierEditorProps = {
 	defKey: string;
@@ -158,12 +172,7 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 				onDragEnd={handleDragEnd}
 				autoScroll={true}
 			>
-				<MuiGrid
-					container
-					width="100%"
-					direction="column"
-					sx={{ userSelect: "none" }}
-				>
+				<TiersContainer>
 					{definition?.tiers.map((tier) => (
 						<TierRow
 							key={tier.key}
@@ -176,7 +185,7 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 						tier={uncategorizedTier}
 						images={tierMapping.mappings[uncategorizedTier.key]?.images || []}
 					/>
-				</MuiGrid>
+				</TiersContainer>
 				<DragOverlay>
 					{currentImage != null ? <Card image={currentImage} overlay /> : null}
 				</DragOverlay>
