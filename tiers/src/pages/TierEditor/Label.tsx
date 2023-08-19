@@ -1,5 +1,6 @@
 import { FC, memo } from "react";
-import { MuiBox, MuiTypography } from "../../components/presentational/Mui";
+import { MuiBox } from "../../components/presentational/Mui";
+import { Typography } from "../../components/presentational/Typography";
 import { useCardSize } from "../../hooks/uiSettings";
 
 export type TierLabelProps = { color: string; label: string };
@@ -17,7 +18,7 @@ export const TierLabel: FC<TierLabelProps> = memo(({ color, label }) => {
 				justifyContent: "center",
 			}}
 		>
-			<MuiTypography variant="subtitle1">{label}</MuiTypography>
+			<Typography>{label}</Typography>
 		</MuiBox>
 	);
 });

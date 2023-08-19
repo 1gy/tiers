@@ -3,13 +3,14 @@ import { ErrorBoundary } from "../../components/functional/ErrorBoundary";
 import { Appbar } from "../../components/presentational/Appbar";
 import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
-import { MuiBox, MuiTypography } from "../../components/presentational/Mui";
+import { MuiBox } from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
 import { TierList } from "./TierList";
+import { Typography } from "../../components/presentational/Typography";
 
 const Title: FC = () => (
 	<Appbar>
-		<MuiTypography>Tiers</MuiTypography>
+		<Typography>Tiers</Typography>
 	</Appbar>
 );
 

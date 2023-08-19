@@ -1,5 +1,6 @@
 import { FC, forwardRef, memo, useState } from "react";
-import { MuiBox, MuiTypography } from "../../components/presentational/Mui";
+import { MuiBox } from "../../components/presentational/Mui";
+import { Typography } from "../../components/presentational/Typography";
 import {
 	DndContext,
 	useSensor,
@@ -160,9 +161,7 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 					justifyContent: "center",
 				}}
 			>
-				<MuiTypography variant="h4" component="h1">
-					{definition?.title}
-				</MuiTypography>
+				<Typography variant="h4">{definition?.title}</Typography>
 			</MuiBox>
 			<DndContext
 				sensors={sensors}

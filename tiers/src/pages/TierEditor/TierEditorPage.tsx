@@ -8,7 +8,6 @@ import {
 	MuiBox,
 	MuiIconButton,
 	MuiLink,
-	MuiTypography,
 } from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
 import { TierEditor } from "./TierEditor";
@@ -17,6 +16,7 @@ import { routes } from "../Routes";
 import { MuiSettingsIcon } from "../../components/presentational/MuiIcons";
 import { SettingsDialog } from "../../dialogs/Settings/SettingsDialog";
 import { useOpenDialog } from "../../dialogs/Settings/store";
+import { Typography } from "../../components/presentational/Typography";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
 	const navigate = useNavigate();
@@ -33,7 +33,7 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 				Tiers
 			</MuiLink>
 			<BreadcrumbsSeparator />
-			<MuiTypography>{defKey}</MuiTypography>
+			<Typography>{defKey}</Typography>
 
 			<MuiBox x-role="spacer" flexGrow={1} />
 
