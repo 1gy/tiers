@@ -42,6 +42,7 @@ export type CardProps = {
 const cardStyle = cva({
 	base: {
 		display: "inline-block",
+		verticalAlign: "top",
 		touchAction: "none",
 		boxShadow: "",
 	},
@@ -65,13 +66,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
 				{...listeners}
 				className={cardStyle({ overlay: !!overlay })}
 			>
-				<img
-					src={image}
-					alt=""
-					width={cardSize}
-					height={cardSize}
-					style={{ verticalAlign: "top" }}
-				/>
+				<img src={image} alt="" width={cardSize} height={cardSize} />
 			</div>
 		);
 	},
