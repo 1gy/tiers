@@ -3,13 +3,14 @@ import { ErrorBoundary } from "../../components/functional/ErrorBoundary";
 import { Appbar } from "../../components/presentational/Appbar";
 import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
-import { MuiBox, MuiTypography } from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
 import { TierList } from "./TierList";
+import { Typography } from "../../components/presentational/Typography";
+import { css } from "../../../styled-system/css";
 
 const Title: FC = () => (
 	<Appbar>
-		<MuiTypography>Tiers</MuiTypography>
+		<Typography>Tiers</Typography>
 	</Appbar>
 );
 
@@ -20,9 +21,11 @@ const Main: FC = () => (
 		)}
 	>
 		<Suspense fallback={"loading"}>
-			<MuiBox width="100%" height="100%" p={1} overflow="hidden">
+			<div
+				className={css({ w: "full", h: "full", p: "2", overflow: "hidden" })}
+			>
 				<TierList />
-			</MuiBox>
+			</div>
 		</Suspense>
 	</ErrorBoundary>
 );

@@ -1,10 +1,10 @@
 import { FC, forwardRef, memo } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { MuiBox } from "../../components/presentational/Mui";
 import { useCardSize } from "../../hooks/uiSettings";
 import type { DraggableAttributes } from "@dnd-kit/core";
 import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import { cva } from "../../../styled-system/css";
 
 export type DraggableCardProps = {
 	image: string;
@@ -39,29 +39,35 @@ export type CardProps = {
 	overlay?: boolean;
 };
 
-export const Card = forwardRef<HTMLElement, CardProps>(
+const cardStyle = cva({
+	base: {
+		display: "inline-block",
+		verticalAlign: "top",
+		touchAction: "none",
+		boxShadow: "",
+	},
+	variants: {
+		overlay: {
+			true: {
+				boxShadow: "0px 0px 12px 4px rgba(0, 0, 0, 0.5)",
+			},
+		},
+	},
+});
+
+export const Card = forwardRef<HTMLDivElement, CardProps>(
 	({ image, attributes, listeners, style, overlay }, ref) => {
 		const cardSize = useCardSize();
 		return (
-			<MuiBox
+			<div
 				ref={ref}
 				style={{ ...style }}
 				{...attributes}
 				{...listeners}
-				display="inline-block"
-				sx={{
-					touchAction: "none",
-					boxShadow: overlay ? "0px 0px 12px 4px rgba(0, 0, 0, 0.5)" : "",
-				}}
+				className={cardStyle({ overlay: !!overlay })}
 			>
-				<img
-					src={image}
-					alt=""
-					width={cardSize}
-					height={cardSize}
-					style={{ verticalAlign: "top" }}
-				/>
-			</MuiBox>
+				<img src={image} alt="" width={cardSize} height={cardSize} />
+			</div>
 		);
 	},
 );

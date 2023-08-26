@@ -1,19 +1,46 @@
-import { FC, memo } from "react";
+import { FC, forwardRef, memo } from "react";
 import type { TierDefinition } from "../../apis/tiers";
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import { useDroppable } from "@dnd-kit/core";
 import { DraggableCard } from "./Card";
 import { TierLabel } from "./Label";
-import {
-	MuiBox,
-	MuiDivider,
-	MuiGrid,
-} from "../../components/presentational/Mui";
+import { css } from "../../../styled-system/css";
+import { Divider } from "../../components/presentational/Divider";
 
 export type TierRowProps = {
 	tier: TierDefinition;
 	images: string[];
 };
+
+const RowGrid = forwardRef<HTMLDivElement, { children: React.ReactNode }>(
+	({ children }, ref) => (
+		<div
+			ref={ref}
+			className={css({
+				display: "flex",
+				flexDirection: "row",
+				flexWrap: "nowrap",
+			})}
+		>
+			{children}
+		</div>
+	),
+);
+
+const ImageContainer = forwardRef<
+	HTMLDivElement,
+	{ children: React.ReactNode }
+>(({ children }, ref) => (
+	<div
+		ref={ref}
+		className={css({
+			w: "full",
+			bgColor: "#fff",
+		})}
+	>
+		{children}
+	</div>
+));
 
 export const TierRow: FC<TierRowProps> = memo(({ tier, images }) => {
 	const { setNodeRef } = useDroppable({ id: tier.label });
@@ -23,16 +50,19 @@ export const TierRow: FC<TierRowProps> = memo(({ tier, images }) => {
 			items={images}
 			strategy={rectSortingStrategy}
 		>
-			<MuiGrid item container direction="row" flexWrap="nowrap">
+			<RowGrid>
 				<TierLabel key={tier.key} color={tier.color} label={tier.label} />
-				<MuiBox pl={1} sx={{ bgcolor: tier.color, opacity: 0.5 }} />
-				<MuiGrid width="100%" ref={setNodeRef} sx={{ bgcolor: "#fff" }}>
+				<div
+					className={css({ pl: "1", opacity: "0.5" })}
+					style={{ backgroundColor: tier.color }}
+				/>
+				<ImageContainer ref={setNodeRef}>
 					{images.map((image) => (
 						<DraggableCard key={image} image={image} />
 					))}
-				</MuiGrid>
-			</MuiGrid>
-			<MuiDivider />
+				</ImageContainer>
+			</RowGrid>
+			<Divider />
 		</SortableContext>
 	);
 });

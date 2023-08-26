@@ -1,24 +1,29 @@
 import { FC, memo } from "react";
-import { MuiBox, MuiTypography } from "../../components/presentational/Mui";
+import { Typography } from "../../components/presentational/Typography";
 import { useCardSize } from "../../hooks/uiSettings";
+import { css } from "../../../styled-system/css";
 
 export type TierLabelProps = { color: string; label: string };
+
+const tierLabelStyle = css({
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
+});
 
 export const TierLabel: FC<TierLabelProps> = memo(({ color, label }) => {
 	const cardSize = useCardSize();
 	return (
-		<MuiBox
-			sx={{
+		<div
+			className={tierLabelStyle}
+			style={{
 				minWidth: cardSize,
 				minHeight: cardSize,
-				bgcolor: color,
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
+				backgroundColor: color,
 			}}
 		>
-			<MuiTypography variant="subtitle1">{label}</MuiTypography>
-		</MuiBox>
+			<Typography>{label}</Typography>
+		</div>
 	);
 });
 TierLabel.displayName = "TierLabel";

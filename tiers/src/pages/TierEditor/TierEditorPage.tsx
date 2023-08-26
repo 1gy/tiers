@@ -4,19 +4,17 @@ import { Appbar } from "../../components/presentational/Appbar";
 import { BreadcrumbsSeparator } from "../../components/presentational/BreadcrumbsSeparator";
 import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
-import {
-	MuiBox,
-	MuiIconButton,
-	MuiLink,
-	MuiTypography,
-} from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
 import { TierEditor } from "./TierEditor";
 import { useNavigate } from "rocon/react";
 import { routes } from "../Routes";
-import { MuiSettingsIcon } from "../../components/presentational/MuiIcons";
 import { SettingsDialog } from "../../dialogs/Settings/SettingsDialog";
 import { useOpenDialog } from "../../dialogs/Settings/store";
+import { Typography } from "../../components/presentational/Typography";
+import { IconButton } from "../../components/presentational/IconButton";
+import { css } from "../../../styled-system/css";
+import { SettingsIcon } from "../../components/presentational/Icons";
+import { Link } from "../../components/presentational/Link";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
 	const navigate = useNavigate();
@@ -24,26 +22,26 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 
 	return (
 		<Appbar>
-			<MuiLink
+			<Link
 				href="#"
 				underline="hover"
 				color="inherit"
 				onClick={() => navigate(routes._.edit)}
 			>
 				Tiers
-			</MuiLink>
+			</Link>
 			<BreadcrumbsSeparator />
-			<MuiTypography>{defKey}</MuiTypography>
+			<Typography>{defKey}</Typography>
 
-			<MuiBox x-role="spacer" flexGrow={1} />
+			<div x-role="spacer" className={css({ flexGrow: 1 })} />
 
-			<MuiIconButton
+			<IconButton
 				color="inherit"
-				sx={{ mr: 1 }}
+				className={css({ mr: "2" })}
 				onClick={() => openSettingsDialog()}
 			>
-				<MuiSettingsIcon />
-			</MuiIconButton>
+				<SettingsIcon />
+			</IconButton>
 
 			<SettingsDialog />
 		</Appbar>
@@ -57,14 +55,17 @@ const Main: FC<{ defKey: string }> = ({ defKey }) => (
 		)}
 	>
 		<Suspense fallback={"loading"}>
-			<MuiBox
-				width="100%"
-				height="100%"
-				p={1}
-				sx={{ overflowY: "scroll", overflowX: "hidden" }}
+			<div
+				className={css({
+					w: "full",
+					h: "full",
+					p: "2",
+					overflowY: "scroll",
+					overflowX: "hidden",
+				})}
 			>
 				<TierEditor defKey={defKey} />
-			</MuiBox>
+			</div>
 		</Suspense>
 	</ErrorBoundary>
 );
