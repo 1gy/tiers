@@ -4,7 +4,6 @@ import { Appbar } from "../../components/presentational/Appbar";
 import { BreadcrumbsSeparator } from "../../components/presentational/BreadcrumbsSeparator";
 import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
-import { MuiBox, MuiLink } from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
 import { TierEditor } from "./TierEditor";
 import { useNavigate } from "rocon/react";
@@ -34,7 +33,7 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 			<BreadcrumbsSeparator />
 			<Typography>{defKey}</Typography>
 
-			<MuiBox x-role="spacer" flexGrow={1} />
+			<div x-role="spacer" className={css({ flexGrow: 1 })} />
 
 			<IconButton
 				color="inherit"
@@ -56,14 +55,17 @@ const Main: FC<{ defKey: string }> = ({ defKey }) => (
 		)}
 	>
 		<Suspense fallback={"loading"}>
-			<MuiBox
-				width="100%"
-				height="100%"
-				p={1}
-				sx={{ overflowY: "scroll", overflowX: "hidden" }}
+			<div
+				className={css({
+					w: "full",
+					h: "full",
+					p: "2",
+					overflowY: "scroll",
+					overflowX: "hidden",
+				})}
 			>
 				<TierEditor defKey={defKey} />
-			</MuiBox>
+			</div>
 		</Suspense>
 	</ErrorBoundary>
 );

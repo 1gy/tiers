@@ -4,7 +4,6 @@ import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import { useDroppable } from "@dnd-kit/core";
 import { DraggableCard } from "./Card";
 import { TierLabel } from "./Label";
-import { MuiBox } from "../../components/presentational/Mui";
 import { css } from "../../../styled-system/css";
 import { Divider } from "../../components/presentational/Divider";
 
@@ -53,7 +52,10 @@ export const TierRow: FC<TierRowProps> = memo(({ tier, images }) => {
 		>
 			<RowGrid>
 				<TierLabel key={tier.key} color={tier.color} label={tier.label} />
-				<MuiBox pl={1} sx={{ bgcolor: tier.color, opacity: 0.5 }} />
+				<div
+					className={css({ pl: "1", opacity: "0.5" })}
+					style={{ backgroundColor: tier.color }}
+				/>
 				<ImageContainer ref={setNodeRef}>
 					{images.map((image) => (
 						<DraggableCard key={image} image={image} />

@@ -1,5 +1,4 @@
 import { FC, forwardRef, memo, useState } from "react";
-import { MuiBox } from "../../components/presentational/Mui";
 import { Typography } from "../../components/presentational/Typography";
 import {
 	DndContext,
@@ -154,15 +153,15 @@ export const TierEditor: FC<TierEditorProps> = memo((props) => {
 	const sensors = useSensors(useSensor(PointerSensor));
 	return (
 		<>
-			<MuiBox
-				sx={{
+			<div
+				className={css({
 					display: "flex",
 					alignItems: "center",
 					justifyContent: "center",
-				}}
+				})}
 			>
 				<Typography variant="h4">{definition?.title}</Typography>
-			</MuiBox>
+			</div>
 			<DndContext
 				sensors={sensors}
 				collisionDetection={rectIntersection}

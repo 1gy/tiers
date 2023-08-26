@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import { MuiCssBaseline } from "./components/presentational/Mui";
 import { ErrorBoundary } from "./components/functional/ErrorBoundary";
 import { RecoilRoot } from "recoil";
 import { RoconRoot } from "rocon/react";
@@ -14,7 +13,6 @@ export const App: FC = () => {
 			)}
 		>
 			<RecoilRoot>
-				<MuiCssBaseline />
 				<RoconRoot>
 					<Routes />
 				</RoconRoot>
