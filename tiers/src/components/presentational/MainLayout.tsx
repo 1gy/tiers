@@ -23,6 +23,7 @@ export const MainLayout: FC<MainLayoutProps> = (props) => {
 					className={css({
 						flexGrow: "1",
 						overflow: "hidden",
+						display: "flex",
 					})}
 				>
 					{props.main}
