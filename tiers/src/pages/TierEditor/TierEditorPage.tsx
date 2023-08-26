@@ -4,11 +4,7 @@ import { Appbar } from "../../components/presentational/Appbar";
 import { BreadcrumbsSeparator } from "../../components/presentational/BreadcrumbsSeparator";
 import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
-import {
-	MuiBox,
-	MuiIconButton,
-	MuiLink,
-} from "../../components/presentational/Mui";
+import { MuiBox, MuiLink } from "../../components/presentational/Mui";
 import { Page } from "../../components/presentational/Page";
 import { TierEditor } from "./TierEditor";
 import { useNavigate } from "rocon/react";
@@ -17,6 +13,8 @@ import { MuiSettingsIcon } from "../../components/presentational/MuiIcons";
 import { SettingsDialog } from "../../dialogs/Settings/SettingsDialog";
 import { useOpenDialog } from "../../dialogs/Settings/store";
 import { Typography } from "../../components/presentational/Typography";
+import { IconButton } from "../../components/presentational/IconButton";
+import { css } from "../../../styled-system/css";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
 	const navigate = useNavigate();
@@ -37,13 +35,13 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 
 			<MuiBox x-role="spacer" flexGrow={1} />
 
-			<MuiIconButton
+			<IconButton
 				color="inherit"
-				sx={{ mr: 1 }}
+				className={css({ mr: "1" })}
 				onClick={() => openSettingsDialog()}
 			>
 				<MuiSettingsIcon />
-			</MuiIconButton>
+			</IconButton>
 
 			<SettingsDialog />
 		</Appbar>
