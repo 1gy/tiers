@@ -15,6 +15,7 @@ import { Typography } from "../../components/presentational/Typography";
 import { IconButton } from "../../components/presentational/IconButton";
 import { css } from "../../../styled-system/css";
 import { SettingsIcon } from "../../components/presentational/Icons";
+import { Link } from "../../components/presentational/Link";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
 	const navigate = useNavigate();
@@ -22,14 +23,14 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 
 	return (
 		<Appbar>
-			<MuiLink
+			<Link
 				href="#"
 				underline="hover"
 				color="inherit"
 				onClick={() => navigate(routes._.edit)}
 			>
 				Tiers
-			</MuiLink>
+			</Link>
 			<BreadcrumbsSeparator />
 			<Typography>{defKey}</Typography>
 
