@@ -9,12 +9,12 @@ import { Page } from "../../components/presentational/Page";
 import { TierEditor } from "./TierEditor";
 import { useNavigate } from "rocon/react";
 import { routes } from "../Routes";
-import { MuiSettingsIcon } from "../../components/presentational/MuiIcons";
 import { SettingsDialog } from "../../dialogs/Settings/SettingsDialog";
 import { useOpenDialog } from "../../dialogs/Settings/store";
 import { Typography } from "../../components/presentational/Typography";
 import { IconButton } from "../../components/presentational/IconButton";
 import { css } from "../../../styled-system/css";
+import { SettingsIcon } from "../../components/presentational/Icons";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
 	const navigate = useNavigate();
@@ -37,10 +37,10 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 
 			<IconButton
 				color="inherit"
-				className={css({ mr: "1" })}
+				className={css({ mr: "2" })}
 				onClick={() => openSettingsDialog()}
 			>
-				<MuiSettingsIcon />
+				<SettingsIcon />
 			</IconButton>
 
 			<SettingsDialog />
