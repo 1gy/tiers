@@ -8,7 +8,7 @@ type ButtonProps = {
 };
 
 const styles = css({
-	color: "#1976d2",
+	color: "app.primary",
 	padding: "6px 8px",
 	fontWeight: "medium",
 	fontSize: "sm",
