@@ -5,7 +5,6 @@ import { BreadcrumbsSeparator } from "../../components/presentational/Breadcrumb
 import { ErrorFallback } from "../../components/presentational/ErrorFallback";
 import { MainLayout } from "../../components/presentational/MainLayout";
 import { Page } from "../../components/presentational/Page";
-import { TierEditor } from "./TierEditor";
 import { useNavigate } from "rocon/react";
 import { routes } from "../Routes";
 import { SettingsDialog } from "../../dialogs/Settings/SettingsDialog";
@@ -15,6 +14,7 @@ import { IconButton } from "../../components/presentational/IconButton";
 import { css } from "../../../styled-system/css";
 import { SettingsIcon } from "../../components/presentational/Icons";
 import { Link } from "../../components/presentational/Link";
+import { TierView } from "./TierView";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
 	const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 				href="#"
 				underline="hover"
 				color="inherit"
-				onClick={() => navigate(routes._.edit)}
+				onClick={() => navigate(routes.exactRoute)}
 			>
 				Tiers
 			</Link>
@@ -64,13 +64,13 @@ const Main: FC<{ defKey: string }> = ({ defKey }) => (
 					overflowX: "hidden",
 				})}
 			>
-				<TierEditor defKey={defKey} />
+				<TierView defKey={defKey} />
 			</div>
 		</Suspense>
 	</ErrorBoundary>
 );
 
-export const TierEditorPage: FC<{ defKey: string }> = ({ defKey }) => (
+export const TierViewPage: FC<{ defKey: string }> = ({ defKey }) => (
 	<Page>
 		<MainLayout
 			title={<Title defKey={defKey} />}

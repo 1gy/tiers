@@ -75,11 +75,11 @@ const TiersContainer = forwardRef<
 	</div>
 ));
 
-export type TierEditorProps = {
+export type TierViewProps = {
 	defKey: string;
 };
 
-export const TierEditor: FC<TierEditorProps> = memo((props) => {
+export const TierView: FC<TierViewProps> = memo((props) => {
 	const definition = useTierDefinition(props.defKey);
 	const tierMapping = useTierMapping(props.defKey);
 	const setTierMapping = useSetTierMapping(props.defKey);
