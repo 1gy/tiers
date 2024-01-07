@@ -7,13 +7,14 @@ import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { cva } from "../../../styled-system/css";
 
 export type DraggableCardProps = {
+	id: string;
 	image: string;
 };
 
-export const DraggableCard: FC<DraggableCardProps> = memo(({ image }) => {
+export const DraggableCard: FC<DraggableCardProps> = memo(({ image, id }) => {
 	const { attributes, listeners, setNodeRef, transform, isDragging } =
 		useSortable({
-			id: image,
+			id,
 		});
 	const style: React.CSSProperties = {
 		transform: CSS.Transform.toString(transform),
@@ -45,6 +46,7 @@ const cardStyle = cva({
 		verticalAlign: "top",
 		touchAction: "none",
 		boxShadow: "",
+		objectFit: "fill",
 	},
 	variants: {
 		overlay: {
@@ -66,7 +68,14 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
 				{...listeners}
 				className={cardStyle({ overlay: !!overlay })}
 			>
-				<img src={image} alt="" width={cardSize} height={cardSize} />
+				<img
+					src={image}
+					alt=""
+					style={{
+						width: `${cardSize}px`,
+						height: `${cardSize}px`,
+					}}
+				/>
 			</div>
 		);
 	},

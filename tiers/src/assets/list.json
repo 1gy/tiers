@@ -1,0 +1,77 @@
+{
+	"2022_0": {
+		"title": "2022年 冬アニメ",
+		"query": {
+			"seasonYear": 2022,
+			"season": "WINTER"
+		}
+	},
+	"2022_1": {
+		"title": "2022年 春アニメ",
+		"query": {
+			"seasonYear": 2022,
+			"season": "SPRING"
+		}
+	},
+	"2022_2": {
+		"title": "2022年 夏アニメ",
+		"query": {
+			"seasonYear": 2022,
+			"season": "SUMMER"
+		}
+	},
+	"2022_3": {
+		"title": "2022年 秋アニメ",
+		"query": {
+			"seasonYear": 2022,
+			"season": "FALL"
+		}
+	},
+	"2022_4": {
+		"title": "2022年 アニメ",
+		"query": {
+			"seasonYear": 2022
+		}
+	},
+	"2023_0": {
+		"title": "2023年 冬アニメ",
+		"query": {
+			"seasonYear": 2023,
+			"season": "WINTER"
+		}
+	},
+	"2023_1": {
+		"title": "2023年 春アニメ",
+		"query": {
+			"seasonYear": 2023,
+			"season": "SPRING"
+		}
+	},
+	"2023_2": {
+		"title": "2023年 夏アニメ",
+		"query": {
+			"seasonYear": 2023,
+			"season": "SUMMER"
+		}
+	},
+	"2023_3": {
+		"title": "2023年 秋アニメ",
+		"query": {
+			"seasonYear": 2023,
+			"season": "FALL"
+		}
+	},
+	"2023_4": {
+		"title": "2023年 アニメ",
+		"query": {
+			"seasonYear": 2023
+		}
+	},
+	"2024_0": {
+		"title": "2024年 冬アニメ",
+		"query": {
+			"seasonYear": 2024,
+			"season": "WINTER"
+		}
+	}
+}
