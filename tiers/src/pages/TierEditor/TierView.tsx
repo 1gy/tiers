@@ -134,7 +134,9 @@ export const TierView: FC<TierViewProps> = memo((props) => {
 		return;
 	};
 
-	const sensors = useSensors(useSensor(PointerSensor));
+	const sensors = useSensors(
+		useSensor(PointerSensor, { activationConstraint: { distance: 1 } }),
+	);
 	return (
 		<>
 			<div

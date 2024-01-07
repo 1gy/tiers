@@ -9,27 +9,31 @@ import { cva } from "../../../styled-system/css";
 export type DraggableCardProps = {
 	id: string;
 	image: string;
+	onClick?: (() => void) | undefined;
 };
 
-export const DraggableCard: FC<DraggableCardProps> = memo(({ image, id }) => {
-	const { attributes, listeners, setNodeRef, transform, isDragging } =
-		useSortable({
-			id,
-		});
-	const style: React.CSSProperties = {
-		transform: CSS.Transform.toString(transform),
-		opacity: isDragging ? 0.5 : 1.0,
-	};
-	return (
-		<Card
-			ref={setNodeRef}
-			style={style}
-			attributes={attributes}
-			listeners={listeners}
-			image={image}
-		/>
-	);
-});
+export const DraggableCard: FC<DraggableCardProps> = memo(
+	({ image, id, onClick }) => {
+		const { attributes, listeners, setNodeRef, transform, isDragging } =
+			useSortable({
+				id,
+			});
+		const style: React.CSSProperties = {
+			transform: CSS.Transform.toString(transform),
+			opacity: isDragging ? 0.5 : 1.0,
+		};
+		return (
+			<Card
+				ref={setNodeRef}
+				style={style}
+				attributes={attributes}
+				listeners={listeners}
+				image={image}
+				onClick={onClick}
+			/>
+		);
+	},
+);
 DraggableCard.displayName = "DraggableCard";
 
 export type CardProps = {
@@ -38,6 +42,7 @@ export type CardProps = {
 	listeners?: SyntheticListenerMap | undefined;
 	style?: React.CSSProperties | undefined;
 	overlay?: boolean;
+	onClick?: (() => void) | undefined;
 };
 
 const cardStyle = cva({
@@ -58,12 +63,13 @@ const cardStyle = cva({
 });
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-	({ image, attributes, listeners, style, overlay }, ref) => {
+	({ image, attributes, listeners, style, overlay, onClick }, ref) => {
 		const cardSize = useCardSize();
 		return (
 			<div
 				ref={ref}
 				style={{ ...style }}
+				onClick={onClick}
 				{...attributes}
 				{...listeners}
 				className={cardStyle({ overlay: !!overlay })}

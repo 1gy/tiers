@@ -88,6 +88,23 @@ export const ListItemButton = forwardRef<
 	);
 });
 
+export const ListItemButtonLink = forwardRef<
+	HTMLAnchorElement,
+	ListItemButtonProps & { href: string }
+>(({ children, className, href }, ref) => {
+	return (
+		<a
+			ref={ref}
+			className={cx(listItemButtonStyle, className)}
+			href={href}
+			target="_blank"
+			rel="noreferrer"
+		>
+			{children}
+		</a>
+	);
+});
+
 type ListItemTextProps = {
 	children: ReactNode;
 	className?: string;
