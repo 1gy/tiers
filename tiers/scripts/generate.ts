@@ -5,7 +5,7 @@ import { dirname } from "path";
 
 type AnilistQuery = {
 	seasonYear: number;
-	season: "WINTER" | "SPRING" | "SUMMER" | "FALL" | null;
+	season?: "WINTER" | "SPRING" | "SUMMER" | "FALL" | null;
 };
 
 type AnilistTierDefinition = {

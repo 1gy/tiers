@@ -15,6 +15,7 @@ import { css } from "../../../styled-system/css";
 import { SettingsIcon } from "../../components/presentational/Icons";
 import { Link } from "../../components/presentational/Link";
 import { TierView } from "./TierView";
+import { AnimeInfoDialog } from "../../dialogs/AnimeInfo/AnimeInfoDialog";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
 	const navigate = useNavigate();
@@ -43,6 +44,7 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 			</IconButton>
 
 			<SettingsDialog />
+			<AnimeInfoDialog />
 		</Appbar>
 	);
 };

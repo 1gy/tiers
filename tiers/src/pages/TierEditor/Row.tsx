@@ -6,6 +6,7 @@ import { DraggableCard } from "./Card";
 import { TierLabel } from "./Label";
 import { css } from "../../../styled-system/css";
 import { Divider } from "../../components/presentational/Divider";
+import { useOpenDialog } from "../../dialogs/AnimeInfo/store";
 
 export type TierRowProps = {
 	tier: TierDefinition;
@@ -45,6 +46,8 @@ const ImageContainer = forwardRef<
 
 export const TierRow: FC<TierRowProps> = memo(({ tier, images, ids }) => {
 	const { setNodeRef } = useDroppable({ id: tier.label });
+	const openInfoDialog = useOpenDialog();
+
 	return (
 		<SortableContext id={tier.key} items={ids} strategy={rectSortingStrategy}>
 			<RowGrid>
@@ -55,7 +58,12 @@ export const TierRow: FC<TierRowProps> = memo(({ tier, images, ids }) => {
 				/>
 				<ImageContainer ref={setNodeRef}>
 					{ids.map((id) => (
-						<DraggableCard key={id} id={id} image={images[id] ?? ""} />
+						<DraggableCard
+							key={id}
+							id={id}
+							image={images[id] ?? ""}
+							onClick={() => openInfoDialog(id)}
+						/>
 					))}
 				</ImageContainer>
 			</RowGrid>
