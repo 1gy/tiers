@@ -21,9 +21,7 @@ const Main: FC = () => (
 		)}
 	>
 		<Suspense fallback={"loading"}>
-			<div
-				className={css({ w: "full", h: "full", p: "2", overflow: "hidden" })}
-			>
+			<div className={css({ w: "full", h: "full", p: "2", overflow: "auto" })}>
 				<TierList />
 			</div>
 		</Suspense>
