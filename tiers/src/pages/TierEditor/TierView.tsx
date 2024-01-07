@@ -17,6 +17,7 @@ import { TierRow } from "./Row";
 import { Card } from "./Card";
 import {
 	TierMapping,
+	swapOrder,
 	uncategorizedTier,
 	useSetTierMapping,
 	useTierData,
@@ -39,19 +40,6 @@ const findRow = (mapping: TierMapping, id: string | null) => {
 		}
 	}
 	return null;
-};
-
-const swapOrder = <T extends unknown>(
-	items: T[],
-	active: number,
-	over: number,
-): T[] => {
-	const item = items[active];
-	if (!item) {
-		return items;
-	}
-	const filtered = items.filter((_, index) => index !== active);
-	return [...filtered.slice(0, over), item, ...filtered.slice(over)];
 };
 
 const TiersContainer = forwardRef<

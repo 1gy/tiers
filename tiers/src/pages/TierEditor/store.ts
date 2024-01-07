@@ -7,9 +7,7 @@ import {
 	useSetRecoilState,
 } from "recoil";
 import {
-	getTierTableDefinition,
 	TierDefinition,
-	TierTableDefinition,
 	TierKey,
 	Tiers,
 	getTiers,
@@ -66,6 +64,13 @@ const normalizeMapping = (
 	return res;
 };
 
+const tierDataQuery = selectorFamily<TierData, TierKey>({
+	key: "tierData",
+	get: (key) => async () => {
+		return await getTierData(key);
+	},
+});
+
 const tierMappingEffect: (key: TierKey) => AtomEffect<TierMapping> =
 	(key) => ({ setSelf, onSet, getPromise }) => {
 		const itemKey = `tiers/${key}`;
@@ -92,20 +97,6 @@ const tierMappingEffect: (key: TierKey) => AtomEffect<TierMapping> =
 		});
 	};
 
-const tierQuery = selectorFamily<TierTableDefinition, TierKey>({
-	key: "currentTier",
-	get: (key) => async () => {
-		return await getTierTableDefinition(key);
-	},
-});
-
-const tierDataQuery = selectorFamily<TierData, TierKey>({
-	key: "tierData",
-	get: (key) => async () => {
-		return await getTierData(key);
-	},
-});
-
 export type TierMapping = {
 	mappings: Record<TierKey, { ids: string[] }>;
 };
@@ -124,15 +115,15 @@ export const useSetTierMapping = (key: TierKey) => {
 	return useSetRecoilState(tierMappingStore(key));
 };
 
-export type TierTable = {
-	tier: TierDefinition;
-	images: string[];
-}[];
-
-export const useTierDefinition = (key: string) => {
-	return useRecoilValue(tierQuery(key));
-};
-
 export const useTierData = (key: string) => {
 	return useRecoilValue(tierDataQuery(key));
+};
+
+export const swapOrder = <T>(items: T[], active: number, over: number): T[] => {
+	const item = items[active];
+	if (!item) {
+		return items;
+	}
+	const filtered = items.filter((_, index) => index !== active);
+	return [...filtered.slice(0, over), item, ...filtered.slice(over)];
 };
