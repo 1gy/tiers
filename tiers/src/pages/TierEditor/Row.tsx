@@ -9,7 +9,8 @@ import { Divider } from "../../components/presentational/Divider";
 
 export type TierRowProps = {
 	tier: TierDefinition;
-	images: string[];
+	ids: string[];
+	images: Record<string, string>;
 };
 
 const RowGrid = forwardRef<HTMLDivElement, { children: React.ReactNode }>(
@@ -42,14 +43,10 @@ const ImageContainer = forwardRef<
 	</div>
 ));
 
-export const TierRow: FC<TierRowProps> = memo(({ tier, images }) => {
+export const TierRow: FC<TierRowProps> = memo(({ tier, images, ids }) => {
 	const { setNodeRef } = useDroppable({ id: tier.label });
 	return (
-		<SortableContext
-			id={tier.key}
-			items={images}
-			strategy={rectSortingStrategy}
-		>
+		<SortableContext id={tier.key} items={ids} strategy={rectSortingStrategy}>
 			<RowGrid>
 				<TierLabel key={tier.key} color={tier.color} label={tier.label} />
 				<div
@@ -57,8 +54,8 @@ export const TierRow: FC<TierRowProps> = memo(({ tier, images }) => {
 					style={{ backgroundColor: tier.color }}
 				/>
 				<ImageContainer ref={setNodeRef}>
-					{images.map((image) => (
-						<DraggableCard key={image} image={image} />
+					{ids.map((id) => (
+						<DraggableCard key={id} id={id} image={images[id] ?? ""} />
 					))}
 				</ImageContainer>
 			</RowGrid>

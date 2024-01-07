@@ -13,6 +13,9 @@ import {
 	TierKey,
 	Tiers,
 	getTiers,
+	TierData,
+	getTierData,
+	standardTiers,
 } from "../../apis/tiers";
 import type { DeepNullable } from "../../libs/types";
 
@@ -32,58 +35,59 @@ export const uncategorizedTier: TierDefinition = {
 };
 
 const normalizeMapping = (
-	definition: TierTableDefinition,
+	tierData: TierData,
 	mapping: DeepNullable<TierMapping> | undefined,
 ) => {
-	const imageSet = new Set<string>(definition.images);
+	const idSet = new Set<string>(Object.keys(tierData.images));
 	const res: TierMapping = { mappings: {} };
-	for (const tier of definition.tiers) {
-		if (mapping?.mappings?.[tier.key]?.images) {
-			const images: string[] = [];
-			mapping.mappings[tier.key]!.images?.forEach((img) => {
-				if (!img) {
+	for (const tier of standardTiers) {
+		if (mapping?.mappings?.[tier.key]?.ids) {
+			const ids: string[] = [];
+			mapping.mappings[tier.key]?.ids?.forEach((id) => {
+				if (!id) {
 					return;
 				}
-				if (imageSet.has(img)) {
-					imageSet.delete(img);
-					images.push(img);
+				if (idSet.has(id)) {
+					idSet.delete(id);
+					ids.push(id);
 				}
 			});
-			res.mappings[tier.key] = { images };
+			res.mappings[tier.key] = { ids };
 		} else {
 			res.mappings[tier.key] = {
-				images: [],
+				ids: [],
 			};
 		}
 	}
 	// uncategorized
 	res.mappings[uncategorizedTier.key] = {
-		images: [...imageSet.values()],
+		ids: [...idSet.values()],
 	};
 	return res;
 };
 
 const tierMappingEffect: (key: TierKey) => AtomEffect<TierMapping> =
 	(key) => ({ setSelf, onSet, getPromise }) => {
-		const savedValue = localStorage.getItem(key);
+		const itemKey = `tiers/${key}`;
+		const savedValue = localStorage.getItem(itemKey);
 		if (savedValue != null) {
 			setSelf(
-				getPromise(tierQuery(key)).then((def) =>
-					normalizeMapping(def, JSON.parse(savedValue)),
+				getPromise(tierDataQuery(key)).then((data) =>
+					normalizeMapping(data, JSON.parse(savedValue)),
 				),
 			);
 		} else {
 			setSelf(
-				getPromise(tierQuery(key)).then((def) =>
-					normalizeMapping(def, undefined),
+				getPromise(tierDataQuery(key)).then((data) =>
+					normalizeMapping(data, undefined),
 				),
 			);
 		}
 		onSet((newValue, _, isReset) => {
 			if (isReset) {
-				localStorage.removeItem(key);
+				localStorage.removeItem(itemKey);
 			} else {
-				localStorage.setItem(key, JSON.stringify(newValue));
+				localStorage.setItem(itemKey, JSON.stringify(newValue));
 			}
 		});
 	};
@@ -95,8 +99,15 @@ const tierQuery = selectorFamily<TierTableDefinition, TierKey>({
 	},
 });
 
+const tierDataQuery = selectorFamily<TierData, TierKey>({
+	key: "tierData",
+	get: (key) => async () => {
+		return await getTierData(key);
+	},
+});
+
 export type TierMapping = {
-	mappings: Record<TierKey, { images: string[] }>;
+	mappings: Record<TierKey, { ids: string[] }>;
 };
 
 const tierMappingStore = atomFamily<TierMapping, TierKey>({
@@ -120,4 +131,8 @@ export type TierTable = {
 
 export const useTierDefinition = (key: string) => {
 	return useRecoilValue(tierQuery(key));
+};
+
+export const useTierData = (key: string) => {
+	return useRecoilValue(tierDataQuery(key));
 };

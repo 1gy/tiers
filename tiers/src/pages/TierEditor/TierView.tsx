@@ -19,26 +19,22 @@ import {
 	TierMapping,
 	uncategorizedTier,
 	useSetTierMapping,
-	useTierDefinition,
+	useTierData,
 	useTierMapping,
 } from "./store";
-import type { TierKey, TierTableDefinition } from "../../apis/tiers";
+import { standardTiers } from "../../apis/tiers";
 import { css } from "../../../styled-system/css";
 
-const findRow = (
-	definition: TierTableDefinition | null,
-	mapping: TierMapping,
-	id: string | null,
-): TierKey | null => {
+const findRow = (mapping: TierMapping, id: string | null) => {
 	if (!id) {
 		return null;
 	}
-	const row = definition?.tiers.find((v) => v.key === id);
+	const row = standardTiers.find((v) => v.key === id);
 	if (row) {
 		return row.key;
 	}
 	for (const [key, value] of Object.entries(mapping.mappings)) {
-		if (value.images.find((s) => s === id)) {
+		if (value.ids.find((s) => s === id)) {
 			return key;
 		}
 	}
@@ -80,21 +76,21 @@ export type TierViewProps = {
 };
 
 export const TierView: FC<TierViewProps> = memo((props) => {
-	const definition = useTierDefinition(props.defKey);
+	const tierData = useTierData(props.defKey);
 	const tierMapping = useTierMapping(props.defKey);
 	const setTierMapping = useSetTierMapping(props.defKey);
-	const [currentImage, setCurrentImage] = useState<string | null>(null);
+	const [currentId, setCurrentId] = useState<string | null>(null);
 
 	const handleDragStart = (event: DragStartEvent) => {
-		setCurrentImage(String(event.active.id));
+		setCurrentId(String(event.active.id));
 	};
 
 	const handleDragOver = (event: DragOverEvent) => {
 		const { active, over } = event;
 		const activeId = String(active.id);
 		const overId = over ? String(over.id) : null;
-		const activeColumnKey = findRow(definition, tierMapping, activeId);
-		const overColumnKey = findRow(definition, tierMapping, overId);
+		const activeColumnKey = findRow(tierMapping, activeId);
+		const overColumnKey = findRow(tierMapping, overId);
 		if (
 			activeColumnKey == null ||
 			overColumnKey == null ||
@@ -106,10 +102,10 @@ export const TierView: FC<TierViewProps> = memo((props) => {
 			produce((draft) => {
 				Object.entries(draft.mappings).forEach(([key, value]) => {
 					if (key === activeColumnKey) {
-						value.images = value.images.filter((img) => img !== activeId);
+						value.ids = value.ids.filter((id) => id !== activeId);
 					}
 					if (key === overColumnKey) {
-						value.images.push(activeId);
+						value.ids.push(activeId);
 					}
 				});
 			}),
@@ -121,8 +117,8 @@ export const TierView: FC<TierViewProps> = memo((props) => {
 		const { active, over } = event;
 		const activeId = String(active.id);
 		const overId = over ? String(over.id) : null;
-		const activeColumnKey = findRow(definition, tierMapping, activeId);
-		const overColumnKey = findRow(definition, tierMapping, overId);
+		const activeColumnKey = findRow(tierMapping, activeId);
+		const overColumnKey = findRow(tierMapping, overId);
 		if (
 			activeColumnKey == null ||
 			overColumnKey == null ||
@@ -134,14 +130,14 @@ export const TierView: FC<TierViewProps> = memo((props) => {
 			produce((draft) => {
 				Object.entries(draft.mappings).forEach(([key, value]) => {
 					if (key === activeColumnKey) {
-						const activeIndex = value.images.findIndex((i) => i === activeId);
-						const overIndex = value.images.findIndex((i) => i === overId);
+						const activeIndex = value.ids.findIndex((i) => i === activeId);
+						const overIndex = value.ids.findIndex((i) => i === overId);
 						if (
 							0 <= activeIndex &&
 							0 <= overIndex &&
 							activeIndex !== overIndex
 						) {
-							value.images = swapOrder(value.images, activeIndex, overIndex);
+							value.ids = swapOrder(value.ids, activeIndex, overIndex);
 						}
 					}
 				});
@@ -160,7 +156,7 @@ export const TierView: FC<TierViewProps> = memo((props) => {
 					justifyContent: "center",
 				})}
 			>
-				<Typography variant="h4">{definition?.title}</Typography>
+				<Typography variant="h4">{tierData.definition.title}</Typography>
 			</div>
 			<DndContext
 				sensors={sensors}
@@ -171,21 +167,25 @@ export const TierView: FC<TierViewProps> = memo((props) => {
 				autoScroll={true}
 			>
 				<TiersContainer>
-					{definition?.tiers.map((tier) => (
+					{standardTiers.map((tier) => (
 						<TierRow
 							key={tier.key}
 							tier={tier}
-							images={tierMapping.mappings[tier.key]?.images || []}
+							images={tierData.images}
+							ids={tierMapping.mappings[tier.key]?.ids || []}
 						/>
 					))}
 					<TierRow
 						key={uncategorizedTier.key}
 						tier={uncategorizedTier}
-						images={tierMapping.mappings[uncategorizedTier.key]?.images || []}
+						images={tierData.images}
+						ids={tierMapping.mappings[uncategorizedTier.key]?.ids || []}
 					/>
 				</TiersContainer>
 				<DragOverlay>
-					{currentImage != null ? <Card image={currentImage} overlay /> : null}
+					{currentId != null ? (
+						<Card image={tierData.images[currentId] ?? ""} overlay />
+					) : null}
 				</DragOverlay>
 			</DndContext>
 		</>
