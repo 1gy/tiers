@@ -23,7 +23,6 @@ const Title: FC<{ defKey: string }> = ({ defKey }) => {
 	return (
 		<Appbar>
 			<Link
-				href="#"
 				underline="hover"
 				color="inherit"
 				onClick={() => navigate(routes.exactRoute)}
