@@ -11,14 +11,19 @@ import { css } from "../../../styled-system/css";
 import {
 	List,
 	ListItem,
+	ListItemButton,
 	ListItemButtonLink,
 	ListItemText,
 } from "../../components/presentational/List";
+import { useNavigate } from "rocon/react";
+import { charactersRoutes } from "../../pages/Routes";
 
 type AnilistInfoProps = {};
 
 const AnilistInfo: FC<AnilistInfoProps> = memo(() => {
 	const info = useAnimeInfo();
+	const navigate = useNavigate();
+
 	return (
 		<div>
 			<Typography variant="h4">{info.title}</Typography>
@@ -35,6 +40,19 @@ const AnilistInfo: FC<AnilistInfoProps> = memo(() => {
 								</ListItemButtonLink>
 							</ListItem>
 						))}
+						<ListItem>
+							<ListItemButton
+								onClick={() =>
+									navigate(charactersRoutes.anyRoute, {
+										id: info.id.toString(),
+									})
+								}
+							>
+								<ListItemText className={css({ textDecoration: "underline" })}>
+									Characters
+								</ListItemText>
+							</ListItemButton>
+						</ListItem>
 					</List>
 				</div>
 			</div>

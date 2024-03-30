@@ -38,6 +38,7 @@ type AnimeInfoQueryResponse = {
 };
 
 export type AnimeInfo = {
+	id: number;
 	title: string;
 	coverImage: string;
 	externalLinks: {
@@ -60,6 +61,7 @@ export const getAnimeInfo = async (id: number): Promise<AnimeInfo> => {
 	});
 	const json = (await response.json()) as AnimeInfoQueryResponse;
 	return {
+		id,
 		title: json.data.Media.title.native,
 		coverImage: json.data.Media.coverImage.large,
 		externalLinks: json.data.Media.externalLinks
