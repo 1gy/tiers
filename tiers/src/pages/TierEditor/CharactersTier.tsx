@@ -112,6 +112,7 @@ export const CharactersTier: FC<CharactersTierProps> = ({ id }) => {
 
 	return (
 		<TierView
+			variant="character"
 			title={charactersData.title}
 			handleDragStart={handleDragStart}
 			handleDragOver={handleDragOver}

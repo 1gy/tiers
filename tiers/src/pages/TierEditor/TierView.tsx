@@ -13,7 +13,7 @@ import {
 } from "@dnd-kit/core";
 import { produce } from "immer";
 
-import { TierRow } from "./Row";
+import { CharacterTierRow, TierRow } from "./Row";
 import { Card } from "./Card";
 import {
 	TierMapping,
@@ -136,6 +136,7 @@ export const AnimeTierView: FC<AnimeTierViewProps> = memo((props) => {
 
 	return (
 		<TierView
+			variant="anime"
 			title={tierData.definition.title}
 			handleDragStart={handleDragStart}
 			handleDragOver={handleDragOver}
@@ -155,6 +156,7 @@ export type TierViewProps = {
 	handleDragEnd: (event: DragEndEvent) => void;
 	currentId?: string | null;
 	mappings: Record<TierKey, { ids: string[] }>;
+	variant: "anime" | "character";
 };
 
 export const TierView: FC<TierViewProps> = ({
@@ -165,10 +167,12 @@ export const TierView: FC<TierViewProps> = ({
 	images,
 	currentId,
 	mappings,
+	variant,
 }) => {
 	const sensors = useSensors(
 		useSensor(PointerSensor, { activationConstraint: { distance: 1 } }),
 	);
+	const Row = variant === "anime" ? TierRow : CharacterTierRow;
 	return (
 		<>
 			<div
@@ -190,14 +194,14 @@ export const TierView: FC<TierViewProps> = ({
 			>
 				<TiersContainer>
 					{standardTiers.map((tier) => (
-						<TierRow
+						<Row
 							key={tier.key}
 							tier={tier}
 							images={images}
 							ids={mappings[tier.key]?.ids || []}
 						/>
 					))}
-					<TierRow
+					<Row
 						key={uncategorizedTier.key}
 						tier={uncategorizedTier}
 						images={images}
@@ -206,7 +210,7 @@ export const TierView: FC<TierViewProps> = ({
 				</TiersContainer>
 				<DragOverlay>
 					{currentId != null ? (
-						<Card image={images[currentId] ?? ""} overlay />
+						<Card image={images[currentId] ?? ""} overlay variant={variant} />
 					) : null}
 				</DragOverlay>
 			</DndContext>
