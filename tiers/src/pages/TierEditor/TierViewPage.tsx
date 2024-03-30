@@ -14,7 +14,7 @@ import { IconButton } from "../../components/presentational/IconButton";
 import { css } from "../../../styled-system/css";
 import { SettingsIcon } from "../../components/presentational/Icons";
 import { Link } from "../../components/presentational/Link";
-import { TierView } from "./TierView";
+import { AnimeTierView } from "./TierView";
 import { AnimeInfoDialog } from "../../dialogs/AnimeInfo/AnimeInfoDialog";
 
 const Title: FC<{ defKey: string }> = ({ defKey }) => {
@@ -65,7 +65,7 @@ const Main: FC<{ defKey: string }> = ({ defKey }) => (
 					overflowX: "hidden",
 				})}
 			>
-				<TierView defKey={defKey} />
+				<AnimeTierView defKey={defKey} />
 			</div>
 		</Suspense>
 	</ErrorBoundary>

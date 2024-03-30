@@ -23,7 +23,7 @@ import {
 	useTierData,
 	useTierMapping,
 } from "./store";
-import { standardTiers } from "../../apis/tiers";
+import { TierKey, standardTiers } from "../../apis/tiers";
 import { css } from "../../../styled-system/css";
 
 const findRow = (mapping: TierMapping, id: string | null) => {
@@ -59,11 +59,11 @@ const TiersContainer = forwardRef<
 	</div>
 ));
 
-export type TierViewProps = {
+export type AnimeTierViewProps = {
 	defKey: string;
 };
 
-export const TierView: FC<TierViewProps> = memo((props) => {
+export const AnimeTierView: FC<AnimeTierViewProps> = memo((props) => {
 	const tierData = useTierData(props.defKey);
 	const tierMapping = useTierMapping(props.defKey);
 	const setTierMapping = useSetTierMapping(props.defKey);
@@ -134,6 +134,38 @@ export const TierView: FC<TierViewProps> = memo((props) => {
 		return;
 	};
 
+	return (
+		<TierView
+			title={tierData.definition.title}
+			handleDragStart={handleDragStart}
+			handleDragOver={handleDragOver}
+			handleDragEnd={handleDragEnd}
+			images={tierData.images}
+			currentId={currentId}
+			mappings={tierMapping.mappings}
+		/>
+	);
+});
+
+export type TierViewProps = {
+	title: string;
+	images: Record<string, string>;
+	handleDragStart: (event: DragStartEvent) => void;
+	handleDragOver: (event: DragOverEvent) => void;
+	handleDragEnd: (event: DragEndEvent) => void;
+	currentId?: string | null;
+	mappings: Record<TierKey, { ids: string[] }>;
+};
+
+export const TierView: FC<TierViewProps> = ({
+	title,
+	handleDragStart,
+	handleDragOver,
+	handleDragEnd,
+	images,
+	currentId,
+	mappings,
+}) => {
 	const sensors = useSensors(
 		useSensor(PointerSensor, { activationConstraint: { distance: 1 } }),
 	);
@@ -146,7 +178,7 @@ export const TierView: FC<TierViewProps> = memo((props) => {
 					justifyContent: "center",
 				})}
 			>
-				<Typography variant="h4">{tierData.definition.title}</Typography>
+				<Typography variant="h4">{title}</Typography>
 			</div>
 			<DndContext
 				sensors={sensors}
@@ -161,23 +193,23 @@ export const TierView: FC<TierViewProps> = memo((props) => {
 						<TierRow
 							key={tier.key}
 							tier={tier}
-							images={tierData.images}
-							ids={tierMapping.mappings[tier.key]?.ids || []}
+							images={images}
+							ids={mappings[tier.key]?.ids || []}
 						/>
 					))}
 					<TierRow
 						key={uncategorizedTier.key}
 						tier={uncategorizedTier}
-						images={tierData.images}
-						ids={tierMapping.mappings[uncategorizedTier.key]?.ids || []}
+						images={images}
+						ids={mappings[uncategorizedTier.key]?.ids || []}
 					/>
 				</TiersContainer>
 				<DragOverlay>
 					{currentId != null ? (
-						<Card image={tierData.images[currentId] ?? ""} overlay />
+						<Card image={images[currentId] ?? ""} overlay />
 					) : null}
 				</DragOverlay>
 			</DndContext>
 		</>
 	);
-});
+};
