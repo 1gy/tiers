@@ -1,4 +1,4 @@
-import { FC, forwardRef, memo } from "react";
+import { FC, forwardRef, memo, useMemo } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useCardSize } from "../../hooks/uiSettings";
@@ -10,10 +10,11 @@ export type DraggableCardProps = {
 	id: string;
 	image: string;
 	onClick?: (() => void) | undefined;
+	variant: "anime" | "character";
 };
 
 export const DraggableCard: FC<DraggableCardProps> = memo(
-	({ image, id, onClick }) => {
+	({ image, id, onClick, variant }) => {
 		const { attributes, listeners, setNodeRef, transform, isDragging } =
 			useSortable({
 				id,
@@ -30,6 +31,7 @@ export const DraggableCard: FC<DraggableCardProps> = memo(
 				listeners={listeners}
 				image={image}
 				onClick={onClick}
+				variant={variant}
 			/>
 		);
 	},
@@ -43,6 +45,7 @@ export type CardProps = {
 	style?: React.CSSProperties | undefined;
 	overlay?: boolean;
 	onClick?: (() => void) | undefined;
+	variant: "anime" | "character";
 };
 
 const cardStyle = cva({
@@ -63,8 +66,20 @@ const cardStyle = cva({
 });
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-	({ image, attributes, listeners, style, overlay, onClick }, ref) => {
+	({ image, attributes, listeners, style, overlay, onClick, variant }, ref) => {
 		const cardSize = useCardSize();
+		const sizeStyle = useMemo<{ width: string; height: string }>(() => {
+			if (variant === "character") {
+				return {
+					width: `${cardSize}px`,
+					height: `${cardSize * 1.5}px`,
+				};
+			}
+			return {
+				width: `${cardSize}px`,
+				height: `${cardSize}px`,
+			};
+		}, [cardSize, variant]);
 		return (
 			<div
 				ref={ref}
@@ -74,14 +89,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
 				{...listeners}
 				className={cardStyle({ overlay: !!overlay })}
 			>
-				<img
-					src={image}
-					alt=""
-					style={{
-						width: `${cardSize}px`,
-						height: `${cardSize}px`,
-					}}
-				/>
+				<img src={image} alt="" style={sizeStyle} />
 			</div>
 		);
 	},

@@ -63,6 +63,7 @@ export const TierRow: FC<TierRowProps> = memo(({ tier, images, ids }) => {
 							id={id}
 							image={images[id] ?? ""}
 							onClick={() => openInfoDialog(id)}
+							variant="anime"
 						/>
 					))}
 				</ImageContainer>
@@ -72,3 +73,35 @@ export const TierRow: FC<TierRowProps> = memo(({ tier, images, ids }) => {
 	);
 });
 TierRow.displayName = "TierRow";
+
+export const CharacterTierRow: FC<TierRowProps> = memo(
+	({ tier, images, ids }) => {
+		const { setNodeRef } = useDroppable({ id: tier.label });
+		// const openInfoDialog = useOpenDialog();
+
+		return (
+			<SortableContext id={tier.key} items={ids} strategy={rectSortingStrategy}>
+				<RowGrid>
+					<TierLabel key={tier.key} color={tier.color} label={tier.label} />
+					<div
+						className={css({ pl: "1", opacity: "0.5" })}
+						style={{ backgroundColor: tier.color }}
+					/>
+					<ImageContainer ref={setNodeRef}>
+						{ids.map((id) => (
+							<DraggableCard
+								key={id}
+								id={id}
+								image={images[id] ?? ""}
+								// onClick={() => openInfoDialog(id)}
+								variant="character"
+							/>
+						))}
+					</ImageContainer>
+				</RowGrid>
+				<Divider />
+			</SortableContext>
+		);
+	},
+);
+CharacterTierRow.displayName = "CharacterTierRow";
