@@ -16,6 +16,7 @@ import {
 	standardTiers,
 } from "../../apis/tiers";
 import type { DeepNullable } from "../../libs/types";
+import { CharactersInfo, getCharacterInfo } from "../../apis/anilist";
 
 const tiersQuery = selector<Tiers>({
 	key: "tiers",
@@ -127,3 +128,14 @@ export const swapOrder = <T>(items: T[], active: number, over: number): T[] => {
 	const filtered = items.filter((_, index) => index !== active);
 	return [...filtered.slice(0, over), item, ...filtered.slice(over)];
 };
+
+export const charactersDataQuery = selectorFamily<CharactersInfo, number>({
+	key: "charactersInfo",
+	get: (key) => async () => {
+		return await getCharacterInfo(key);
+	},
+});
+
+export const useCharactersInfo = (key: number) => {
+	return useRecoilValue(charactersDataQuery(key));
+}
