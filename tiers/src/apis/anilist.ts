@@ -136,6 +136,6 @@ export const getCharacterInfo = async (id: number): Promise<CharactersInfo> => {
 		characters: json.data.Media.characters.nodes.map((node) => ({
 			id: node.id,
 			image: node.image.medium,
-		}))
+		})),
 	};
 };

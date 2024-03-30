@@ -138,4 +138,58 @@ export const charactersDataQuery = selectorFamily<CharactersInfo, number>({
 
 export const useCharactersInfo = (key: number) => {
 	return useRecoilValue(charactersDataQuery(key));
-}
+};
+
+const characterTierMappingEffect: (
+	key: CharacterInfoKey,
+) => AtomEffect<TierMapping> = (key) => ({ setSelf, onSet }) => {
+	const itemKey = `c/${key.id}`;
+	const savedValue = localStorage.getItem(itemKey);
+	if (savedValue != null) {
+		setSelf(
+			normalizeMapping(
+				{
+					images: key.images,
+					definition: { query: { season: null, seasonYear: 0 }, title: "" },
+				},
+				JSON.parse(savedValue),
+			),
+		);
+	} else {
+		setSelf(
+			normalizeMapping(
+				{
+					images: key.images,
+					definition: { query: { season: null, seasonYear: 0 }, title: "" },
+				},
+				undefined,
+			),
+		);
+	}
+	onSet((newValue, _, isReset) => {
+		if (isReset) {
+			localStorage.removeItem(itemKey);
+		} else {
+			localStorage.setItem(itemKey, JSON.stringify(newValue));
+		}
+	});
+};
+
+type CharacterInfoKey = {
+	id: number;
+	images: Record<string, string>;
+};
+
+const characterTierMappingStore = atomFamily<TierMapping, CharacterInfoKey>({
+	key: "characterTierMappingState",
+	default: { mappings: {} },
+	effects: (key) => [characterTierMappingEffect(key)],
+});
+
+export const useCharacterTierMapping = (key: CharacterInfoKey) => {
+	return useRecoilValue(characterTierMappingStore(key));
+};
+
+export const useSetCharacterTierMapping = (key: CharacterInfoKey) => {
+	return useSetRecoilState(characterTierMappingStore(key));
+};
