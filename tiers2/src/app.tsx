@@ -1,17 +1,9 @@
-import { css } from "@styled-system/css";
-import { useState } from "preact/hooks";
+import type { FunctionComponent } from "preact";
+import { Suspense } from "preact/compat";
+import { AppRoutes } from "./routes";
 
-export function App() {
-	const [count, setCount] = useState(0);
-
-	return (
-		<>
-			<div class={css({ fontSize: "2xl", fontWeight: "bold", pt: "56px" })}>
-				Hello 🐼!
-			</div>
-			<div class={css({ fontSize: "xl", pt: "24px" })}>
-				<button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
-			</div>
-		</>
-	);
-}
+export const App: FunctionComponent = () => (
+	<Suspense fallback="loading">
+		<AppRoutes />
+	</Suspense>
+);
