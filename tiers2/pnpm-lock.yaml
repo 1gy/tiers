@@ -11,9 +11,9 @@ dependencies:
   preact:
     specifier: ^10.19.6
     version: 10.20.1
-  preact-router:
-    specifier: ^4.1.2
-    version: 4.1.2(preact@10.20.1)
+  wouter-preact:
+    specifier: ^3.1.1
+    version: 3.1.1(preact@10.20.1)
 
 devDependencies:
   '@biomejs/biome':
@@ -1982,6 +1982,10 @@ packages:
       brace-expansion: 2.0.1
     dev: true
 
+  /mitt@3.0.1:
+    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+    dev: false
+
   /mkdirp@3.0.1:
     resolution: {integrity: sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==}
     engines: {node: '>=10'}
@@ -2264,14 +2268,6 @@ packages:
       source-map-js: 1.2.0
     dev: true
 
-  /preact-router@4.1.2(preact@10.20.1):
-    resolution: {integrity: sha512-uICUaUFYh+XQ+6vZtQn1q+X6rSqwq+zorWOCLWPF5FAsQh3EJ+RsDQ9Ee+fjk545YWQHfUxhrBAaemfxEnMOUg==}
-    peerDependencies:
-      preact: '>=10'
-    dependencies:
-      preact: 10.20.1
-    dev: false
-
   /preact@10.20.1:
     resolution: {integrity: sha512-JIFjgFg9B2qnOoGiYMVBtrcFxHqn+dNXbq76bVmcaHYJFYR4lW67AOcXgAYQQTDYXDOg/kTZrKPNCdRgJ2UJmw==}
 
@@ -2314,6 +2310,11 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
+
+  /regexparam@3.0.0:
+    resolution: {integrity: sha512-RSYAtP31mvYLkAHrOlh25pCNQ5hWnT106VukGaaFfuJrZFkGRX5GhUAdPqpSDXxOhA2c4akmRuplv1mRqnBn6Q==}
+    engines: {node: '>=8'}
+    dev: false
 
   /resolve@1.22.8:
     resolution: {integrity: sha512-oKWePCxqpd6FlLvGV1VU0x7bkPmmCNolxzjMf4NczoDnQcIWrAF+cPtZn5i6n+RfD2d9i0tzpKnG6Yk168yIyw==}
@@ -2717,6 +2718,16 @@ packages:
       siginfo: 2.0.0
       stackback: 0.0.2
     dev: true
+
+  /wouter-preact@3.1.1(preact@10.20.1):
+    resolution: {integrity: sha512-RGSMxPRXDyVuC+4ZD/0r2IrNB9Am/k5Vxfg2ZT+hC1sllv5oNJey26BHlYC71gbHH7QDuF7Cg6rGTbqQ/2X0ig==}
+    peerDependencies:
+      preact: ^10.0.0
+    dependencies:
+      mitt: 3.0.1
+      preact: 10.20.1
+      regexparam: 3.0.0
+    dev: false
 
   /yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
