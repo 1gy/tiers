@@ -21,6 +21,8 @@
     "@biomejs/biome": "1.6.3",
     "@pandacss/dev": "^0.37.1",
     "@preact/preset-vite": "^2.8.2",
+    "@testing-library/preact": "^3.2.3",
+    "happy-dom": "^14.3.10",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-tsconfig-paths": "^4.3.2",
