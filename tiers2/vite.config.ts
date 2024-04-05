@@ -10,5 +10,9 @@ export default defineConfig({
 	test: {
 		environment: "happy-dom",
 		includeSource: ["src/**/*.ts"],
+		coverage: {
+			reporter: ["html"],
+			exclude: ["styled-system/**/*", "*.config.{ts,cjs}"],
+		},
 	},
 });

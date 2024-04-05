@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "biome check --apply src",
     "format": "biome format --write src",
-    "test": "vitest"
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "jotai": "^2.7.2",
@@ -22,6 +23,7 @@
     "@pandacss/dev": "^0.37.1",
     "@preact/preset-vite": "^2.8.2",
     "@testing-library/preact": "^3.2.3",
+    "@vitest/coverage-v8": "^1.4.0",
     "happy-dom": "^14.3.10",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
