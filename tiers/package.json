@@ -8,8 +8,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "rome check src",
-    "format": "rome format src",
+    "check": "pnpm biome check --apply src",
     "generate": "pnpm dlx tsx scripts/generate.ts"
   },
   "dependencies": {
@@ -22,10 +21,10 @@
     "react-dom": "^18.2.0",
     "recoil": "^0.7.6",
     "recoil-sync": "^0.2.0",
-    "rocon": "^1.2.8",
-    "rome": "^11.0.0"
+    "rocon": "^1.2.8"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.6.4",
     "@pandacss/dev": "^0.11.1",
     "@tsconfig/strictest": "^2.0.1",
     "@types/react": "^18.0.26",
@@ -35,5 +34,5 @@
     "vite": "^4.0.0",
     "vitest": "^0.26.2"
   },
-  "packageManager": "pnpm@7.18.0"
+  "packageManager": "pnpm@9.0.0-beta.3+sha256.e55cdbdef21da8b4fd68345716937e473f0645e2f65313f390b0d33f2d2440a3"
 }
