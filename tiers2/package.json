@@ -11,6 +11,7 @@
     "lint": "biome check --apply src",
     "format": "biome format --write src",
     "test": "vitest",
+    "test-ui": "vitest --ui",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "@preact/preset-vite": "^2.8.2",
     "@testing-library/preact": "^3.2.3",
     "@vitest/coverage-v8": "^1.4.0",
+    "@vitest/ui": "^1.4.0",
     "happy-dom": "^14.3.10",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
