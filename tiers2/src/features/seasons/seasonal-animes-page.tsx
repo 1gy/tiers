@@ -2,7 +2,7 @@ import { css } from "@styled-system/css";
 import type { FunctionComponent } from "preact";
 import { TierView } from "../tier/tier-view";
 import { Appbar, Page } from "../ui";
-import { useSeasonalAnimeImages, type Season } from "./season";
+import { type Season, useSeasonalAnimeImages } from "./season";
 
 export type SeasonalAnimesProps = {
 	season: Season;

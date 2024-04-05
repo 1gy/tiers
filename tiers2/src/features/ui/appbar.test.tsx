@@ -1,5 +1,5 @@
-import { it, expect } from "vitest";
 import { render } from "@testing-library/preact";
+import { expect, it } from "vitest";
 import { Appbar } from "./appbar";
 
 it("should render", () => {

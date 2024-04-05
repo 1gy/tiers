@@ -1,6 +1,6 @@
-import { FunctionComponent } from "preact";
-import { Appbar } from "../ui/appbar";
 import { css } from "@styled-system/css";
+import type { FunctionComponent } from "preact";
+import { Appbar } from "../ui/appbar";
 
 export const HomePage: FunctionComponent = () => {
 	return (

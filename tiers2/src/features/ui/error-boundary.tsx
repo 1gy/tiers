@@ -1,8 +1,8 @@
 import {
 	Component,
-	ComponentChild,
-	ComponentChildren,
-	ErrorInfo,
+	type ComponentChild,
+	type ComponentChildren,
+	type ErrorInfo,
 } from "preact";
 
 type Props = {
@@ -34,9 +34,8 @@ export class ErrorBoundary extends Component<Props, State> {
 		if (this.state.hasError) {
 			if (this.props.fallback) {
 				return this.props.fallback(this.state.error, this.state.errorInfo);
-			} else {
-				return <>Something went wrong.</>;
 			}
+			return <>Something went wrong.</>;
 		}
 		return this.props.children;
 	}

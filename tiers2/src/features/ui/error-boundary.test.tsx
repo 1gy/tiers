@@ -1,10 +1,10 @@
-import { it, expect, vi } from "vitest";
 import { render } from "@testing-library/preact";
+import { expect, it, vi } from "vitest";
 import { ErrorBoundary } from "./error-boundary";
 
 it("should render", () => {
 	const { container } = render(<ErrorBoundary>Content</ErrorBoundary>);
-	expect(container.firstChild).toMatchInlineSnapshot(`Content`);
+	expect(container.firstChild).toMatchInlineSnapshot("Content");
 });
 
 const RaiseError = () => {
@@ -18,5 +18,5 @@ it("should render with fallback", async () => {
 			<RaiseError />
 		</ErrorBoundary>,
 	);
-	expect(container.firstChild).toMatchInlineSnapshot(`throw error`);
+	expect(container.firstChild).toMatchInlineSnapshot("throw error");
 });
