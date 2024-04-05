@@ -4,5 +4,5 @@ export PATH="~/.local/share/fnm:$PATH"
 eval "`fnm env`"
 fnm install --lts
 
-# Install pnpm
-npm install -g pnpm
+# Enable corepack
+corepack enable pnpm
