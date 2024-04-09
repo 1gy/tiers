@@ -1,6 +1,6 @@
 import { atom, useAtom, type Atom } from "jotai";
 import { atomFamily } from "jotai/utils";
-import { getSeasonalAnimeImages } from "../../gateway/anilist";
+import { getSeasonalAnimeImages } from "../../libs/anilist";
 
 export type Season = "WINTER" | "SPRING" | "SUMMER" | "FALL";
 
