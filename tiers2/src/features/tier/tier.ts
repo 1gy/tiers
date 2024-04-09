@@ -16,3 +16,11 @@ export const standardTiers: TierDefinition[] = [
 	{ key: "F", label: "F", color: "#7fffff" },
 	{ key: "G", label: "G", color: "#7fbfff" },
 ];
+
+export const uncategorizedTier: TierDefinition = {
+	key: "uncategorized",
+	color: "gray",
+	label: "",
+};
+
+export type TierMapping = Record<TierKey, { ids: string[] }>;

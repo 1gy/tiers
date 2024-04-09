@@ -2,7 +2,7 @@ import { css } from "@styled-system/css";
 import type { FunctionComponent } from "preact";
 import { TierView } from "../tier/tier-view";
 import { Appbar, Page } from "../ui";
-import { type Season, useSeasonalAnimeImages } from "./season";
+import { useSeasonalAnimeImages, type Season } from "./season";
 
 export type SeasonalAnimesProps = {
 	season: Season;
@@ -34,7 +34,7 @@ export const SeasonalAnimesPage: FunctionComponent<SeasonalAnimesProps> = ({
 					</Appbar>
 				</div>
 				<div className={css({ flexGrow: "1", overflow: "hidden" })}>
-					<TierView images={images} />
+					<TierView images={images} mapping={{}} />
 				</div>
 			</div>
 		</Page>
