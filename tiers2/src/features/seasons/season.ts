@@ -1,6 +1,7 @@
 import { atom, useAtom, type Atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 import { getSeasonalAnimeImages } from "../../libs/anilist";
+import { cached } from "../../libs/cache";
 
 export type Season = "WINTER" | "SPRING" | "SUMMER" | "FALL";
 
@@ -19,7 +20,11 @@ const seasonalAnimesAtom = atomFamily<
 >(
 	({ year, season }) => {
 		return atom(async () => {
-			const images = await getSeasonalAnimeImages(year, season);
+			const images = await cached(
+				`seasonal-anime-images-${year}-${season}`,
+				() => getSeasonalAnimeImages(year, season),
+				1000 * 60 * 60 * 24,
+			);
 			return images;
 		});
 	},
