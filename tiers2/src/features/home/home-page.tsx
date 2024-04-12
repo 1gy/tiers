@@ -1,13 +1,11 @@
 import { css } from "@styled-system/css";
 import type { FunctionComponent } from "preact";
-import { Appbar } from "../ui/appbar";
+import { Title } from "./title";
 
 export const HomePage: FunctionComponent = () => {
 	return (
 		<div className={css({ w: "screen", h: "screen" })}>
-			<Appbar>
-				<h1>Home</h1>
-			</Appbar>
+			<Title />
 		</div>
 	);
 };
