@@ -1,4 +1,5 @@
 import type { FunctionalComponent } from "preact";
+import { Button } from "../ui";
 import {
 	Dialog,
 	DialogActions,
@@ -15,9 +16,7 @@ export const SettingsDialog: FunctionalComponent = () => {
 			<DialogTitle>設定</DialogTitle>
 			<DialogContent>aa</DialogContent>
 			<DialogActions>
-				<button onClick={close} type="button">
-					閉じる
-				</button>
+				<Button onClick={close}>閉じる</Button>
 			</DialogActions>
 		</Dialog>
 	);
