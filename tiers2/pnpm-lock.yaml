@@ -11,6 +11,9 @@ importers:
       jotai:
         specifier: ^2.7.2
         version: 2.7.2
+      jotai-effect:
+        specifier: ^1.0.0
+        version: 1.0.0(jotai@2.7.2)
       preact:
         specifier: ^10.19.6
         version: 10.20.1
@@ -1169,6 +1172,11 @@ packages:
 
   javascript-stringify@2.1.0:
     resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
+
+  jotai-effect@1.0.0:
+    resolution: {integrity: sha512-eCgKKG4BACDzuJGYTu0xZRk1C1MEOvbAhC3L8w7YufQ2lSLORwNX/WFnCuZxLFX0sDLkTUeoUzOYaw8wnXY+UQ==}
+    peerDependencies:
+      jotai: '>=2.5.0'
 
   jotai@2.7.2:
     resolution: {integrity: sha512-6Ft5kpNu8p93Ssf1Faoza3hYQZRIYp7rioK8MwTTFnbQKwUyZElwquPwl1h6U0uo9hC0jr+ghO3gcSjc6P35/Q==}
@@ -3199,6 +3207,10 @@ snapshots:
       istanbul-lib-report: 3.0.1
 
   javascript-stringify@2.1.0: {}
+
+  jotai-effect@1.0.0(jotai@2.7.2):
+    dependencies:
+      jotai: 2.7.2
 
   jotai@2.7.2: {}
 
