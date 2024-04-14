@@ -1,6 +1,6 @@
 import { render } from "@testing-library/preact";
 import { expect, it, vi } from "vitest";
-import { ErrorBoundary } from "./error-boundary";
+import { ErrorBoundary } from "./@error-boundary";
 
 it("should render", () => {
 	const { container } = render(<ErrorBoundary>Content</ErrorBoundary>);

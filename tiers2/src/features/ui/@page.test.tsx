@@ -1,6 +1,6 @@
 import { render } from "@testing-library/preact";
 import { expect, it } from "vitest";
-import { Page } from "./page";
+import { Page } from "./@page";
 
 it("should render", () => {
 	const { container } = render(

@@ -1,6 +1,6 @@
 import { render } from "@testing-library/preact";
 import { expect, it } from "vitest";
-import { IconButton } from "./icon-button";
+import { IconButton } from "./@icon-button";
 
 it("should render", () => {
 	const { container } = render(

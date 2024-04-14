@@ -6,7 +6,7 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-} from "../ui/dialog";
+} from "../ui/@dialog";
 import {
 	useCardSize,
 	useSetCardSize,

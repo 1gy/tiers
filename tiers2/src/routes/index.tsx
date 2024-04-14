@@ -1,7 +1,7 @@
 import type { FunctionComponent } from "preact";
 import { Route, Router, Switch } from "wouter-preact";
 import { HomePage } from "../features/home/home-page";
-import { ErrorBoundary } from "../features/ui/error-boundary";
+import { ErrorBoundary } from "../features/ui/@error-boundary";
 import { SeasonalAnimes } from "./seasonal-animes";
 import { Seasons } from "./seasons";
 
