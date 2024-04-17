@@ -37,6 +37,8 @@ type SeasonalAnimeImagesQueryResponse = {
 	};
 };
 
+// TODO: in-source testingのせいでテストモジュールだと判定されてしまう？ (biome 1.7.0)
+// biome-ignore lint/suspicious/noExportsInTest: 誤判定のため無視
 export const getSeasonalAnimeImages = async (
 	seasonYear: number,
 	season: "WINTER" | "SPRING" | "SUMMER" | "FALL",

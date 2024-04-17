@@ -20,7 +20,7 @@
     "wouter-preact": "^3.1.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.3",
+    "@biomejs/biome": "1.7.0",
     "@pandacss/dev": "^0.37.1",
     "@preact/preset-vite": "^2.8.2",
     "@testing-library/preact": "^3.2.3",

@@ -1,4 +1,4 @@
-import { atom, useAtom, type Atom } from "jotai";
+import { type Atom, atom, useAtom } from "jotai";
 import { atomFamily } from "jotai/utils";
 import { getSeasonalAnimeImages } from "../../libs/anilist";
 import { cached } from "../../libs/cache";
@@ -10,7 +10,7 @@ type SeasonalAnimeQuery = {
 	year: number;
 };
 
-type SeasonalAnimeImages = {
+export type SeasonalAnimeImages = {
 	[id: string]: string;
 };
 

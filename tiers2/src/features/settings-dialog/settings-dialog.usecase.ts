@@ -6,8 +6,8 @@ const openAtom = atom(false);
 
 export const useSettingsDialog = () => {
 	const [isOpen, setIsOpen] = useAtom(openAtom);
-	const open = useCallback(() => setIsOpen(true), []);
-	const close = useCallback(() => setIsOpen(false), []);
+	const open = useCallback(() => setIsOpen(true), [setIsOpen]);
+	const close = useCallback(() => setIsOpen(false), [setIsOpen]);
 	return { isOpen, open, close };
 };
 

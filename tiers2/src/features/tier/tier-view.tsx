@@ -1,7 +1,7 @@
 import { css } from "@styled-system/css";
 import type { FunctionComponent } from "preact";
 import { Row } from "./row";
-import { standardTiers, uncategorizedTier, type TierMapping } from "./tier";
+import { type TierMapping, standardTiers, uncategorizedTier } from "./tier";
 
 export type TierViewProps = {
 	images: Record<string, string>;

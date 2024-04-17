@@ -1,4 +1,4 @@
-import { forwardRef, type SVGProps } from "preact/compat";
+import { type SVGProps, forwardRef } from "preact/compat";
 import { css, cx } from "../../../styled-system/css";
 
 // heroicons
