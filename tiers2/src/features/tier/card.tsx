@@ -1,5 +1,6 @@
 import { cva } from "@styled-system/css";
-import { forwardRef } from "preact/compat";
+import { forwardRef, useMemo } from "preact/compat";
+import { useCardSize } from "../settings-dialog";
 
 export type CardProps = {
 	image: string;
@@ -23,8 +24,15 @@ const cardStyle = cva({
 });
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(({ image }, ref) => {
+	const cardSize = useCardSize();
+	const sizeStyle = useMemo<{ width: string; height: string }>(() => {
+		return {
+			width: `${cardSize}px`,
+			height: `${cardSize}px`,
+		};
+	}, [cardSize]);
 	return (
-		<div ref={ref} className={cardStyle({ overlay: false })}>
+		<div ref={ref} className={cardStyle({ overlay: false })} style={sizeStyle}>
 			<img src={image} alt="" />
 		</div>
 	);
