@@ -32,8 +32,8 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({ image }, ref) => {
 		};
 	}, [cardSize]);
 	return (
-		<div ref={ref} className={cardStyle({ overlay: false })} style={sizeStyle}>
-			<img src={image} alt="" />
+		<div ref={ref} className={cardStyle({ overlay: false })}>
+			<img src={image} alt="" style={sizeStyle} />
 		</div>
 	);
 });

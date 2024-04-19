@@ -1,5 +1,6 @@
 import { css } from "@styled-system/css";
 import type { FunctionComponent } from "preact";
+import { useCardSize } from "../settings-dialog";
 
 export type TierLabelProps = { color: string; label: string };
 
@@ -13,12 +14,13 @@ export const TierLabel: FunctionComponent<TierLabelProps> = ({
 	color,
 	label,
 }) => {
+	const cardSize = useCardSize();
 	return (
 		<div
 			className={tierLabelStyle}
 			style={{
-				minWidth: "64px",
-				minHeight: "64px",
+				minWidth: cardSize,
+				minHeight: cardSize,
 				backgroundColor: color,
 			}}
 		>

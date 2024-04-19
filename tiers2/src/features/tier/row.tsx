@@ -1,8 +1,8 @@
 import { css } from "@styled-system/css";
 import type { ComponentChildren, FunctionComponent } from "preact";
 import { forwardRef } from "preact/compat";
-import { Card } from "./card";
-import { TierLabel } from "./label";
+import { Card } from "./@card";
+import { TierLabel } from "./@label";
 import type { TierDefinition } from "./tier";
 
 type RowGridProps = {
