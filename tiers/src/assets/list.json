@@ -87,5 +87,12 @@
 			"seasonYear": 2024,
 			"season": "SUMMER"
 		}
+	},
+	"2024_3": {
+		"title": "2024年 秋アニメ",
+		"query": {
+			"seasonYear": 2024,
+			"season": "FALL"
+		}
 	}
 }
