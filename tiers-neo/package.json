@@ -1,0 +1,30 @@
+{
+  "name": "@1gy/tiers-neo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "prepare": "panda codegen",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "biome check --write",
+    "preview": "vite preview",
+    "check": "pnpm biome check --apply src"
+  },
+  "dependencies": {
+    "@tanstack/react-router": "^1.95.1",
+    "jotai": "^2.11.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@pandacss/dev": "^0.51.1",
+    "@types/react": "^19.0.3",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "globals": "^15.14.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  }
+}
