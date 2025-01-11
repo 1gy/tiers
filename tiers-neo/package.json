@@ -9,7 +9,8 @@
     "build": "tsc -b && vite build",
     "lint": "biome check --write",
     "preview": "vite preview",
-    "check": "pnpm biome check --apply src"
+    "test": "vitest",
+    "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.95.1",
@@ -27,6 +28,7 @@
     "@vitejs/plugin-react-swc": "^3.5.0",
     "globals": "^15.14.0",
     "typescript": "^5.7.2",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8"
   }
 }
