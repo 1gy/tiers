@@ -1,7 +1,21 @@
+import {
+	RouterProvider,
+	createHashHistory,
+	createRouter,
+} from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
+
+import { routeTree } from "./routeTree.gen.ts";
+
+const router = createRouter({ routeTree, history: createHashHistory() });
+
+declare module "@tanstack/react-router" {
+	interface Register {
+		router: typeof router;
+	}
+}
 
 const root = document.getElementById("root");
 if (!root) {
@@ -9,6 +23,6 @@ if (!root) {
 }
 createRoot(root).render(
 	<StrictMode>
-		<App />
+		<RouterProvider router={router} />
 	</StrictMode>,
 );
