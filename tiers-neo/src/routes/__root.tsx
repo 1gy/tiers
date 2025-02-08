@@ -1,7 +1,7 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { lazy } from "react";
-import Appbar from "../features/ui/@appbar";
 import { css } from "../../styled-system/css";
+import Appbar from "../features/ui/@appbar";
 
 const TanStackRouterDevtools = import.meta.env.DEV
 	? lazy(() =>
